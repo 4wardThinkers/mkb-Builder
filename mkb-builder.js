@@ -1068,6 +1068,64 @@ mainPhotoEl?.addEventListener('change', () => {
     labelRO.observe(scope);
     fitAllLabels();
 
+    // ===== Shopify Cart Integration =====
+    // Injects mkb-builder properties into the product form BEFORE Dawn's own
+    // AJAX handler runs. Dawn then includes them automatically via FormData(form).
+    // This avoids double-fetch and keeps the native cart drawer working.
+
+    function collectProperties() {
+      const props = {};
+      root.querySelectorAll('input[name^="properties["]').forEach(input => {
+        const val = (input.value || '').trim();
+        if (!val) return;
+        const key = input.name.replace(/^properties\[/, '').replace(/\]$/, '');
+        props[key] = val;
+      });
+      return props;
+    }
+
+    function hookProductForm() {
+      // Use *=  (contains) so localized URLs like /de/cart/add also match
+      const productForm =
+        document.querySelector('form[action*="cart/add"]') ||
+        document.querySelector('product-form form');
+
+      console.log('[MKB] hookProductForm – form found:', productForm ? productForm.getAttribute('action') : 'NOT FOUND');
+
+      if (!productForm) return;
+
+      // Capture phase → runs before Dawn's bubble-phase submit handler
+      productForm.addEventListener('submit', () => {
+        const isComplete = scope.classList.contains('mkb-complete');
+        console.log('[MKB] submit fired – mkb-complete:', isComplete, '| scope el:', scope.tagName + '.' + [...scope.classList].join('.'));
+
+        if (!isComplete) return;
+
+        // Remove leftovers from any previous click
+        productForm.querySelectorAll('.mkb-injected-prop').forEach(el => el.remove());
+
+        const properties = collectProperties();
+        // Unique ID (hidden from customer via _ prefix) prevents Shopify
+        // from merging two different custom orders into qty +1
+        properties['_mkb_id'] = Date.now().toString(36);
+
+        console.log('[MKB] injecting properties:', properties);
+
+        Object.entries(properties).forEach(([key, val]) => {
+          const inp = document.createElement('input');
+          inp.type      = 'hidden';
+          inp.name      = `properties[${key}]`;
+          inp.value     = val;
+          inp.className = 'mkb-injected-prop';
+          productForm.appendChild(inp);
+        });
+
+        console.log('[MKB] done – injected', Object.keys(properties).length, 'properties');
+      }, true /* capture phase */);
+    }
+
+    hookProductForm();
+
     // ===== Initial =====
     if (!q('#mkb_char_1_type')?.value?.trim()) setMainType('Person');
     for (let i = 2; i <= 5; i++) {
