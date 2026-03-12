@@ -2,84 +2,91 @@
 <script src="{{ 'mkb-builder.css' | asset_url }}" defer></script>
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Eva's Geschichten – Kinderbuch zusammenstellen</title>
   <link rel="stylesheet" href="mkb-builder.css">
 </head>
+
 <body>
-<div id="mkb-builder" class="mkb" data-backend-api="https://nearly-climb-kit-ind.trycloudflare.com/api/v1/store/get-signed-upload-url">
+  <div id="mkb-builder" class="mkb"
+    data-backend-api="https://nearly-climb-kit-ind.trycloudflare.com/api/v1/store/get-signed-upload-url">
     <div class="panel">
       <h2>Stelle dein einzigartiges Kinderbuch zusammen</h2>
       <p class="sub">Wähle nacheinander die Optionen – du kannst jede Auswahl später jederzeit ändern.</p>
-  
+
       <!-- Hidden inputs = Line item properties -->
-      <input class="mkb-hidden" id="mkb_age" name="properties[Altersgruppe]" value="">
-      <input class="mkb-hidden" id="mkb_theme" name="properties[Thema]" value="">
-      <input class="mkb-hidden" id="mkb_narrative" name="properties[Erzählstil]" value="">
-      <input class="mkb-hidden" id="mkb_message" name="properties[Botschaft/Werte]" value="">
-      <input class="mkb-hidden" id="mkb_style" name="properties[Art Style Key]" value="">
-      <input class="mkb-hidden" id="mkb_wishes" name="properties[Sonstige Wünsche]" value="">
-  
-  <input class="mkb-hidden" id="mkb_char_1_type" name="properties[Charakter 1 - Typ]" value="">
-  <input class="mkb-hidden" id="mkb_char_1_name" name="properties[Charakter 1 - Name]" value="">
-  <input class="mkb-hidden" id="mkb_char_1_likes" name="properties[Charakter 1 - Interessen]" value="">
-  <input class="mkb-hidden" id="mkb_char_1_role" name="properties[Charakter 1 - Rolle]" value="">
-  <input class="mkb-hidden" id="mkb_char_1_look" name="properties[Charakter 1 - Aussehen]" value="">
-  <input class="mkb-hidden" id="mkb_char_1_securefileid" name="properties[Charakter 1 - SecureFileID]" value="">
+      <input class="mkb-hidden" id="mkb_age" name="properties[Altersgruppe]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_theme" name="properties[Thema]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_narrative" name="properties[Erzählstil]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_message" name="properties[Botschaft/Werte]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_style" name="properties[Art Style Key]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_wishes" name="properties[Sonstige Wünsche]" value="" form="product-form-template--27316906033536__main">
 
-  <input class="mkb-hidden" id="mkb_char_2_type" name="properties[Charakter 2 - Typ]" value="">
-  <input class="mkb-hidden" id="mkb_char_2_name" name="properties[Charakter 2 - Name]" value="">
-  <input class="mkb-hidden" id="mkb_char_2_likes" name="properties[Charakter 2 - Interessen]" value="">
-  <input class="mkb-hidden" id="mkb_char_2_role" name="properties[Charakter 2 - Rolle]" value="">
-  <input class="mkb-hidden" id="mkb_char_2_look" name="properties[Charakter 2 - Aussehen]" value="">
-  <input class="mkb-hidden" id="mkb_char_2_securefileid" name="properties[Charakter 2 - SecureFileID]" value="">
-  <input class="mkb-hidden" id="mkb_char_2_relation" name="properties[Charakter 2 - Relation]" value="">
+      <input class="mkb-hidden" id="mkb_char_1_type" name="properties[Charakter 1 - Typ]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_1_name" name="properties[Charakter 1 - Name]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_1_likes" name="properties[Charakter 1 - Interessen]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_1_role" name="properties[Charakter 1 - Rolle]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_1_look" name="properties[Charakter 1 - Aussehen]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_1_securefileid" name="properties[Charakter 1 - SecureFileID]" value="" form="product-form-template--27316906033536__main">
 
-  <input class="mkb-hidden" id="mkb_char_3_type" name="properties[Charakter 3 - Typ]" value="">
-  <input class="mkb-hidden" id="mkb_char_3_name" name="properties[Charakter 3 - Name]" value="">
-  <input class="mkb-hidden" id="mkb_char_3_likes" name="properties[Charakter 3 - Interessen]" value="">
-  <input class="mkb-hidden" id="mkb_char_3_role" name="properties[Charakter 3 - Rolle]" value="">
-  <input class="mkb-hidden" id="mkb_char_3_look" name="properties[Charakter 3 - Aussehen]" value="">
-  <input class="mkb-hidden" id="mkb_char_3_securefileid" name="properties[Charakter 3 - SecureFileID]" value="">
-  <input class="mkb-hidden" id="mkb_char_3_relation" name="properties[Charakter 3 - Relation]" value="">
+      <input class="mkb-hidden" id="mkb_char_2_type" name="properties[Charakter 2 - Typ]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_2_name" name="properties[Charakter 2 - Name]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_2_likes" name="properties[Charakter 2 - Interessen]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_2_role" name="properties[Charakter 2 - Rolle]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_2_look" name="properties[Charakter 2 - Aussehen]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_2_securefileid" name="properties[Charakter 2 - SecureFileID]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_2_relation" name="properties[Charakter 2 - Relation]" value="" form="product-form-template--27316906033536__main">
 
-  <input class="mkb-hidden" id="mkb_char_4_type" name="properties[Charakter 4 - Typ]" value="">
-  <input class="mkb-hidden" id="mkb_char_4_name" name="properties[Charakter 4 - Name]" value="">
-  <input class="mkb-hidden" id="mkb_char_4_likes" name="properties[Charakter 4 - Interessen]" value="">
-  <input class="mkb-hidden" id="mkb_char_4_role" name="properties[Charakter 4 - Rolle]" value="">
-  <input class="mkb-hidden" id="mkb_char_4_look" name="properties[Charakter 4 - Aussehen]" value="">
-  <input class="mkb-hidden" id="mkb_char_4_securefileid" name="properties[Charakter 4 - SecureFileID]" value="">
-  <input class="mkb-hidden" id="mkb_char_4_relation" name="properties[Charakter 4 - Relation]" value="">
+      <input class="mkb-hidden" id="mkb_char_3_type" name="properties[Charakter 3 - Typ]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_3_name" name="properties[Charakter 3 - Name]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_3_likes" name="properties[Charakter 3 - Interessen]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_3_role" name="properties[Charakter 3 - Rolle]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_3_look" name="properties[Charakter 3 - Aussehen]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_3_securefileid" name="properties[Charakter 3 - SecureFileID]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_3_relation" name="properties[Charakter 3 - Relation]" value="" form="product-form-template--27316906033536__main">
 
-  <input class="mkb-hidden" id="mkb_char_5_type" name="properties[Charakter 5 - Typ]" value="">
-  <input class="mkb-hidden" id="mkb_char_5_name" name="properties[Charakter 5 - Name]" value="">
-  <input class="mkb-hidden" id="mkb_char_5_likes" name="properties[Charakter 5 - Interessen]" value="">
-  <input class="mkb-hidden" id="mkb_char_5_role" name="properties[Charakter 5 - Rolle]" value="">
-  <input class="mkb-hidden" id="mkb_char_5_look" name="properties[Charakter 5 - Aussehen]" value="">
-  <input class="mkb-hidden" id="mkb_char_5_securefileid" name="properties[Charakter 5 - SecureFileID]" value="">
-  <input class="mkb-hidden" id="mkb_char_5_relation" name="properties[Charakter 5 - Relation]" value="">
-  
+      <input class="mkb-hidden" id="mkb_char_4_type" name="properties[Charakter 4 - Typ]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_4_name" name="properties[Charakter 4 - Name]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_4_likes" name="properties[Charakter 4 - Interessen]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_4_role" name="properties[Charakter 4 - Rolle]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_4_look" name="properties[Charakter 4 - Aussehen]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_4_securefileid" name="properties[Charakter 4 - SecureFileID]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_4_relation" name="properties[Charakter 4 - Relation]" value="" form="product-form-template--27316906033536__main">
+
+      <input class="mkb-hidden" id="mkb_char_5_type" name="properties[Charakter 5 - Typ]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_5_name" name="properties[Charakter 5 - Name]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_5_likes" name="properties[Charakter 5 - Interessen]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_5_role" name="properties[Charakter 5 - Rolle]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_5_look" name="properties[Charakter 5 - Aussehen]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_5_securefileid" name="properties[Charakter 5 - SecureFileID]" value="" form="product-form-template--27316906033536__main">
+      <input class="mkb-hidden" id="mkb_char_5_relation" name="properties[Charakter 5 - Relation]" value="" form="product-form-template--27316906033536__main">
+
       <!-- Gruppe 1: Altersgruppe -->
       <div class="group" data-group="age">
         <div class="group-title">Wähle die Alterskategorie</div>
         <div class="grid">
           <div class="card" data-target="#mkb_age" data-value="0-2">
-            <div class="icon">👶</div><div class="label">0–2 Jahre</div>
+            <div class="icon">👶</div>
+            <div class="label">0–2 Jahre</div>
           </div>
           <div class="card" data-target="#mkb_age" data-value="3-5">
-            <div class="icon">🧒</div><div class="label">3–5 Jahre</div>
+            <div class="icon">🧒</div>
+            <div class="label">3–5 Jahre</div>
           </div>
           <div class="card" data-target="#mkb_age" data-value="6-9">
-            <div class="icon">👧</div><div class="label">6–9 Jahre</div>
+            <div class="icon">👧</div>
+            <div class="label">6–9 Jahre</div>
           </div>
           <div class="card" data-target="#mkb_age" data-value="10+">
-            <div class="icon">🎧</div><div class="label">10+ Jahre</div>
+            <div class="icon">🎧</div>
+            <div class="label">10+ Jahre</div>
           </div>
         </div>
       </div>
-  
+
       <!-- Gruppe 2: Thema (als Beschreibung + Vorschläge) -->
       <div class="group locked" data-group="theme" data-unlock-when="age">
         <div class="group-title">Worum soll es in der Geschichte gehen?</div>
@@ -87,7 +94,8 @@
         <div class="mkb-charForm">
           <div class="mkb-fieldBlock">
             <label class="mkb-label" for="mkbThemeText">Beschreibe kurz das Thema</label>
-            <textarea class="field" id="mkbThemeText" rows="4" placeholder="z.B. Ein Ausflug zum Meer, ein Besuch bei den Großeltern, ein besonderer Tag im Zoo…"></textarea>
+            <textarea class="field" id="mkbThemeText" rows="4"
+              placeholder="z.B. Ein Ausflug zum Meer, ein Besuch bei den Großeltern, ein besonderer Tag im Zoo…"></textarea>
           </div>
 
           <div class="mkb-fieldBlock" style="margin-top: 8px;">
@@ -103,7 +111,8 @@
                 <button type="button" class="mkb-suggestChip" data-theme="Im Zoo">Im Zoo</button>
                 <button type="button" class="mkb-suggestChip" data-theme="Geburtstagsfest">Geburtstagsfest</button>
                 <button type="button" class="mkb-suggestChip" data-theme="Reise mit dem Zug">Reise mit dem Zug</button>
-                <button type="button" class="mkb-suggestChip" data-theme="Im Garten / in der Natur">Im Garten / in der Natur</button>
+                <button type="button" class="mkb-suggestChip" data-theme="Im Garten / in der Natur">Im Garten / in der
+                  Natur</button>
                 <button type="button" class="mkb-suggestChip" data-theme="Nachts unterwegs">Nachts unterwegs</button>
                 <button type="button" class="mkb-suggestChip" data-theme="Schloss oder Burg">Schloss oder Burg</button>
               </div>
@@ -116,14 +125,38 @@
       <div class="group locked" data-group="narrative" data-unlock-when="theme">
         <div class="group-title">Erzählstil</div>
         <div class="grid">
-          <div class="card" data-target="#mkb_narrative" data-value="Märchen"><div class="icon">🧚</div><div class="label">Märchen</div></div>
-          <div class="card" data-target="#mkb_narrative" data-value="Geschichte"><div class="icon">📖</div><div class="label">Geschichte</div></div>
-          <div class="card" data-target="#mkb_narrative" data-value="Abenteuer"><div class="icon">🗺️</div><div class="label">Abenteuer</div></div>
-          <div class="card" data-target="#mkb_narrative" data-value="Comic"><div class="icon">💥</div><div class="label">Comic</div></div>
-          <div class="card" data-target="#mkb_narrative" data-value="Sachgeschichte"><div class="icon">🔎</div><div class="label">Sachgeschichte</div></div>
-          <div class="card" data-target="#mkb_narrative" data-value="Gutenachtgeschichte"><div class="icon">🌙</div><div class="label">Gutenachtgeschichte</div></div>
-          <div class="card" data-target="#mkb_narrative" data-value="Fabel"><div class="icon">🦊</div><div class="label">Fabel</div></div>
-          <div class="card" data-target="#mkb_narrative" data-value="Reime"><div class="icon">🎵</div><div class="label">Reime</div></div>
+          <div class="card" data-target="#mkb_narrative" data-value="Märchen">
+            <div class="icon">🧚</div>
+            <div class="label">Märchen</div>
+          </div>
+          <div class="card" data-target="#mkb_narrative" data-value="Geschichte">
+            <div class="icon">📖</div>
+            <div class="label">Geschichte</div>
+          </div>
+          <div class="card" data-target="#mkb_narrative" data-value="Abenteuer">
+            <div class="icon">🗺️</div>
+            <div class="label">Abenteuer</div>
+          </div>
+          <div class="card" data-target="#mkb_narrative" data-value="Comic">
+            <div class="icon">💥</div>
+            <div class="label">Comic</div>
+          </div>
+          <div class="card" data-target="#mkb_narrative" data-value="Sachgeschichte">
+            <div class="icon">🔎</div>
+            <div class="label">Sachgeschichte</div>
+          </div>
+          <div class="card" data-target="#mkb_narrative" data-value="Gutenachtgeschichte">
+            <div class="icon">🌙</div>
+            <div class="label">Gutenachtgeschichte</div>
+          </div>
+          <div class="card" data-target="#mkb_narrative" data-value="Fabel">
+            <div class="icon">🦊</div>
+            <div class="label">Fabel</div>
+          </div>
+          <div class="card" data-target="#mkb_narrative" data-value="Reime">
+            <div class="icon">🎵</div>
+            <div class="label">Reime</div>
+          </div>
         </div>
       </div>
 
@@ -131,353 +164,405 @@
       <div class="group locked" data-group="message" data-unlock-when="narrative">
         <div class="group-title">Was soll durch die Geschichte vermittelt werden?</div>
         <div class="grid">
-          <div class="card" data-target="#mkb_message" data-value="Mut"><div class="icon">🦁</div><div class="label">Mut</div></div>
-          <div class="card" data-target="#mkb_message" data-value="Freude"><div class="icon">😊</div><div class="label">Freude</div></div>
-          <div class="card" data-target="#mkb_message" data-value="Freundschaft"><div class="icon">🤝</div><div class="label">Freundschaft</div></div>
-          <div class="card" data-target="#mkb_message" data-value="Hilfsbereitschaft"><div class="icon">🧡</div><div class="label">Hilfsbereitschaft</div></div>
-          <div class="card" data-target="#mkb_message" data-value="Selbstvertrauen"><div class="icon">✨</div><div class="label">Selbstvertrauen</div></div>
-          <div class="card" data-target="#mkb_message" data-value="Geduld"><div class="icon">⏳</div><div class="label">Geduld</div></div>
-          <div class="card" data-target="#mkb_message" data-value="Respekt"><div class="icon">🙏</div><div class="label">Respekt</div></div>
-          <div class="card" data-target="#mkb_message" data-value="Neugier"><div class="icon">🌟</div><div class="label">Neugier</div></div>
+          <div class="card" data-target="#mkb_message" data-value="Mut">
+            <div class="icon">🦁</div>
+            <div class="label">Mut</div>
+          </div>
+          <div class="card" data-target="#mkb_message" data-value="Freude">
+            <div class="icon">😊</div>
+            <div class="label">Freude</div>
+          </div>
+          <div class="card" data-target="#mkb_message" data-value="Freundschaft">
+            <div class="icon">🤝</div>
+            <div class="label">Freundschaft</div>
+          </div>
+          <div class="card" data-target="#mkb_message" data-value="Hilfsbereitschaft">
+            <div class="icon">🧡</div>
+            <div class="label">Hilfsbereitschaft</div>
+          </div>
+          <div class="card" data-target="#mkb_message" data-value="Selbstvertrauen">
+            <div class="icon">✨</div>
+            <div class="label">Selbstvertrauen</div>
+          </div>
+          <div class="card" data-target="#mkb_message" data-value="Geduld">
+            <div class="icon">⏳</div>
+            <div class="label">Geduld</div>
+          </div>
+          <div class="card" data-target="#mkb_message" data-value="Respekt">
+            <div class="icon">🙏</div>
+            <div class="label">Respekt</div>
+          </div>
+          <div class="card" data-target="#mkb_message" data-value="Neugier">
+            <div class="icon">🌟</div>
+            <div class="label">Neugier</div>
+          </div>
         </div>
       </div>
 
-  <!-- Gruppe 5: Hauptfigur (sichtbar erst nach Botschaft/Werte) -->
-<div class="group locked" data-group="chars" data-unlock-when="message">
-    <div class="group-title">Hauptfigur</div>
-  
-    <div class="mkb-charForm">
-      <div class="mkb-segTitle">Wähle den Charaktertyp</div>
-      <div class="mkb-seg" id="mkbMainTypeSeg">
-        <button type="button" class="mkb-segBtn selected" data-type="Person">Person</button>
-        <button type="button" class="mkb-segBtn" data-type="Tier">Tier</button>
-        <button type="button" class="mkb-segBtn" data-type="Objekt">Objekt</button>
-      </div>
-  
-      <div class="mkb-fieldBlock">
-        <label class="mkb-label" for="mkbMainName">Hauptfigur</label>
-        <input class="field" id="mkbMainName" placeholder="Gib den Namen der Hauptfigur ein">
-      </div>
-  
-      <div class="mkb-row2">
-        <div class="mkb-fieldBlock" id="mkbMainGenderWrap">
-          <label class="mkb-label" for="mkbMainGender">Geschlecht</label>
-          <select class="field" id="mkbMainGender">
-            <option value="geschlechtsneutral" selected>geschlechtsneutral</option>
-            <option value="männlich">männlich</option>
-            <option value="weiblich">weiblich</option>
-          </select>
-        </div>
-  
-        <div class="mkb-fieldBlock" id="mkbMainAgeWrap">
-          <label class="mkb-label" for="mkbMainAge">Alter</label>
-          <input class="field" id="mkbMainAge" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Alter eingeben (nur Zahlen)">
-        </div>
-      </div>
-  
-      <div class="mkb-upload">
-        <div class="mkb-segTitle" style="margin-top: 6px;">Aussehen der Hauptfigur</div>
-        <div class="mkb-seg" id="mkbMainLookMode">
-          <button type="button" class="mkb-segBtn selected" data-mode="photo">Foto hochladen</button>
-          <button type="button" class="mkb-segBtn" data-mode="desc">Aussehen beschreiben</button>
-        </div>
-        <div class="mkb-uploadBox" id="mkbMainPhotoWrap">
-          <input class="mkb-file" id="mkbMainPhoto" type="file" accept="image/png, image/jpeg, image/webp, image/heic, image/heif, .heic, .heif">
-          <div class="mkb-uploadInner">
-            <div class="mkb-uploadIcon">⬆️</div>
-            <div class="mkb-uploadText">Lade ein Foto als Grundlage für die Illustrationen hoch</div>
-          </div>
-        </div>
-        <div class="mkb-fieldBlock" id="mkbMainDescWrap" style="display:none; margin-top: 10px;">
-          <label class="mkb-label" for="mkbMainDesc">Beschreibe das Aussehen</label>
-          <textarea class="field" id="mkbMainDesc" rows="3" placeholder="z.B. rote Locken, Sommersprossen, blaues Kleid, trägt eine Brille…"></textarea>
-        </div>
-        <div class="mkb-uploadHint" id="mkbMainPhotoHint">
-          Stellen Sie sicher, dass nur eine Person deutlich sichtbar ist, wobei auch der Körper klar im Bild ist.
-        </div>
-        <div class="mkb-upload-status" id="mkbUploadStatus1"></div>
-      </div>
-    </div>
-  
-    <div id="mkbCharBlocksContainer">
-      <div class="mkb-charBlock mkb-charBlock-hidden" data-char-index="2" id="mkbCharBlock2">
+      <!-- Gruppe 5: Hauptfigur (sichtbar erst nach Botschaft/Werte) -->
+      <div class="group locked" data-group="chars" data-unlock-when="message">
+        <div class="group-title">Hauptfigur</div>
+
         <div class="mkb-charForm">
-          <div class="mkb-charBlock-header"><span class="mkb-segTitle">Charakter 2</span><button type="button" class="mkb-removeChar" data-char-index="2">✕ Entfernen</button></div>
-          <div class="mkb-seg mkb-char-type-seg">
+          <div class="mkb-segTitle">Wähle den Charaktertyp</div>
+          <div class="mkb-seg" id="mkbMainTypeSeg">
             <button type="button" class="mkb-segBtn selected" data-type="Person">Person</button>
             <button type="button" class="mkb-segBtn" data-type="Tier">Tier</button>
             <button type="button" class="mkb-segBtn" data-type="Objekt">Objekt</button>
           </div>
+
           <div class="mkb-fieldBlock">
-            <label class="mkb-label">Name</label>
-            <input class="field mkb-char-name" placeholder="Name des Charakters" data-char-index="2">
+            <label class="mkb-label" for="mkbMainName">Hauptfigur</label>
+            <input class="field" id="mkbMainName" placeholder="Gib den Namen der Hauptfigur ein">
           </div>
-          <div class="mkb-fieldBlock">
-            <label class="mkb-label">Relation zum Hauptcharakter</label>
-            <div class="mkb-relation-chips">
-              <button type="button" class="mkb-relationChip" data-relation="Mutter">Mutter</button>
-              <button type="button" class="mkb-relationChip" data-relation="Vater">Vater</button>
-              <button type="button" class="mkb-relationChip" data-relation="Bruder">Bruder</button>
-              <button type="button" class="mkb-relationChip" data-relation="Schwester">Schwester</button>
-              <button type="button" class="mkb-relationChip" data-relation="Freund">Freund</button>
-              <button type="button" class="mkb-relationChip" data-relation="Freundin">Freundin</button>
-              <button type="button" class="mkb-relationChip" data-relation="Haustier">Haustier</button>
-              <button type="button" class="mkb-relationChip" data-relation="Kuscheltier">Kuscheltier</button>
-              <button type="button" class="mkb-relationChip" data-relation="Sonstiges">Sonstiges</button>
-            </div>
-          </div>
+
           <div class="mkb-row2">
-            <div class="mkb-fieldBlock mkb-char-gender-wrap">
-              <label class="mkb-label">Geschlecht</label>
-              <select class="field mkb-char-gender" data-char-index="2">
+            <div class="mkb-fieldBlock" id="mkbMainGenderWrap">
+              <label class="mkb-label" for="mkbMainGender">Geschlecht</label>
+              <select class="field" id="mkbMainGender">
                 <option value="geschlechtsneutral" selected>geschlechtsneutral</option>
                 <option value="männlich">männlich</option>
                 <option value="weiblich">weiblich</option>
               </select>
             </div>
-            <div class="mkb-fieldBlock mkb-char-age-wrap">
-              <label class="mkb-label">Alter</label>
-              <input class="field mkb-char-age" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Alter (nur Zahlen)" data-char-index="2">
+
+            <div class="mkb-fieldBlock" id="mkbMainAgeWrap">
+              <label class="mkb-label" for="mkbMainAge">Alter</label>
+              <input class="field" id="mkbMainAge" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off"
+                placeholder="Alter eingeben (nur Zahlen)">
             </div>
           </div>
+
           <div class="mkb-upload">
-            <div class="mkb-segTitle" style="margin-top: 6px;">Aussehen</div>
-            <div class="mkb-seg mkb-look-mode" data-char-index="2">
+            <div class="mkb-segTitle" style="margin-top: 6px;">Aussehen der Hauptfigur</div>
+            <div class="mkb-seg" id="mkbMainLookMode">
               <button type="button" class="mkb-segBtn selected" data-mode="photo">Foto hochladen</button>
               <button type="button" class="mkb-segBtn" data-mode="desc">Aussehen beschreiben</button>
             </div>
-            <div class="mkb-uploadBox mkb-photo-wrap" data-char-index="2">
-              <input class="mkb-file mkb-char-photo" type="file" accept="image/png, image/jpeg, image/webp, image/heic, image/heif, .heic, .heif" data-char-index="2">
+            <div class="mkb-uploadBox" id="mkbMainPhotoWrap">
+              <input class="mkb-file" id="mkbMainPhoto" type="file"
+                accept="image/png, image/jpeg, image/webp, image/heic, image/heif, .heic, .heif">
               <div class="mkb-uploadInner">
                 <div class="mkb-uploadIcon">⬆️</div>
                 <div class="mkb-uploadText">Lade ein Foto als Grundlage für die Illustrationen hoch</div>
               </div>
             </div>
-            <div class="mkb-fieldBlock mkb-desc-wrap" data-char-index="2" style="display:none; margin-top: 10px;">
-              <label class="mkb-label">Aussehen beschreiben</label>
-              <textarea class="field mkb-char-desc" rows="3" placeholder="z.B. grüne Augen, kurzer Pony, gelbe Jacke…" data-char-index="2"></textarea>
+            <div class="mkb-fieldBlock" id="mkbMainDescWrap" style="display:none; margin-top: 10px;">
+              <label class="mkb-label" for="mkbMainDesc">Beschreibe das Aussehen</label>
+              <textarea class="field" id="mkbMainDesc" rows="3"
+                placeholder="z.B. rote Locken, Sommersprossen, blaues Kleid, trägt eine Brille…"></textarea>
             </div>
-            <div class="mkb-upload-status" id="mkbUploadStatus2"></div>
+            <div class="mkb-uploadHint" id="mkbMainPhotoHint">
+              Stellen Sie sicher, dass nur eine Person deutlich sichtbar ist, wobei auch der Körper klar im Bild ist.
+            </div>
+            <div class="mkb-upload-status" id="mkbUploadStatus1"></div>
           </div>
         </div>
-      </div>
-      <div class="mkb-charBlock mkb-charBlock-hidden" data-char-index="3" id="mkbCharBlock3">
-        <div class="mkb-charForm">
-          <div class="mkb-charBlock-header"><span class="mkb-segTitle">Charakter 3</span><button type="button" class="mkb-removeChar" data-char-index="3">✕ Entfernen</button></div>
-          <div class="mkb-seg mkb-char-type-seg">
-            <button type="button" class="mkb-segBtn selected" data-type="Person">Person</button>
-            <button type="button" class="mkb-segBtn" data-type="Tier">Tier</button>
-            <button type="button" class="mkb-segBtn" data-type="Objekt">Objekt</button>
-          </div>
-          <div class="mkb-fieldBlock">
-            <label class="mkb-label">Name</label>
-            <input class="field mkb-char-name" placeholder="Name des Charakters" data-char-index="3">
-          </div>
-          <div class="mkb-fieldBlock">
-            <label class="mkb-label">Relation zum Hauptcharakter</label>
-            <div class="mkb-relation-chips">
-              <button type="button" class="mkb-relationChip" data-relation="Mutter">Mutter</button>
-              <button type="button" class="mkb-relationChip" data-relation="Vater">Vater</button>
-              <button type="button" class="mkb-relationChip" data-relation="Bruder">Bruder</button>
-              <button type="button" class="mkb-relationChip" data-relation="Schwester">Schwester</button>
-              <button type="button" class="mkb-relationChip" data-relation="Freund">Freund</button>
-              <button type="button" class="mkb-relationChip" data-relation="Freundin">Freundin</button>
-              <button type="button" class="mkb-relationChip" data-relation="Haustier">Haustier</button>
-              <button type="button" class="mkb-relationChip" data-relation="Kuscheltier">Kuscheltier</button>
-              <button type="button" class="mkb-relationChip" data-relation="Sonstiges">Sonstiges</button>
-            </div>
-          </div>
-          <div class="mkb-row2">
-            <div class="mkb-fieldBlock mkb-char-gender-wrap">
-              <label class="mkb-label">Geschlecht</label>
-              <select class="field mkb-char-gender" data-char-index="3">
-                <option value="geschlechtsneutral" selected>geschlechtsneutral</option>
-                <option value="männlich">männlich</option>
-                <option value="weiblich">weiblich</option>
-              </select>
-            </div>
-            <div class="mkb-fieldBlock mkb-char-age-wrap">
-              <label class="mkb-label">Alter</label>
-              <input class="field mkb-char-age" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Alter (nur Zahlen)" data-char-index="3">
-            </div>
-          </div>
-          <div class="mkb-upload">
-            <div class="mkb-segTitle" style="margin-top: 6px;">Aussehen</div>
-            <div class="mkb-seg mkb-look-mode" data-char-index="3">
-              <button type="button" class="mkb-segBtn selected" data-mode="photo">Foto hochladen</button>
-              <button type="button" class="mkb-segBtn" data-mode="desc">Aussehen beschreiben</button>
-            </div>
-            <div class="mkb-uploadBox mkb-photo-wrap" data-char-index="3">
-              <input class="mkb-file mkb-char-photo" type="file" accept="image/png, image/jpeg, image/webp, image/heic, image/heif, .heic, .heif" data-char-index="3">
-              <div class="mkb-uploadInner">
-                <div class="mkb-uploadIcon">⬆️</div>
-                <div class="mkb-uploadText">Lade ein Foto als Grundlage für die Illustrationen hoch</div>
+
+        <div id="mkbCharBlocksContainer">
+          <div class="mkb-charBlock mkb-charBlock-hidden" data-char-index="2" id="mkbCharBlock2">
+            <div class="mkb-charForm">
+              <div class="mkb-charBlock-header"><span class="mkb-segTitle">Charakter 2</span><button type="button"
+                  class="mkb-removeChar" data-char-index="2">✕ Entfernen</button></div>
+              <div class="mkb-seg mkb-char-type-seg">
+                <button type="button" class="mkb-segBtn selected" data-type="Person">Person</button>
+                <button type="button" class="mkb-segBtn" data-type="Tier">Tier</button>
+                <button type="button" class="mkb-segBtn" data-type="Objekt">Objekt</button>
+              </div>
+              <div class="mkb-fieldBlock">
+                <label class="mkb-label">Name</label>
+                <input class="field mkb-char-name" placeholder="Name des Charakters" data-char-index="2">
+              </div>
+              <div class="mkb-fieldBlock">
+                <label class="mkb-label">Relation zum Hauptcharakter</label>
+                <div class="mkb-relation-chips">
+                  <button type="button" class="mkb-relationChip" data-relation="Mutter">Mutter</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Vater">Vater</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Bruder">Bruder</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Schwester">Schwester</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Freund">Freund</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Freundin">Freundin</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Haustier">Haustier</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Kuscheltier">Kuscheltier</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Sonstiges">Sonstiges</button>
+                </div>
+              </div>
+              <div class="mkb-row2">
+                <div class="mkb-fieldBlock mkb-char-gender-wrap">
+                  <label class="mkb-label">Geschlecht</label>
+                  <select class="field mkb-char-gender" data-char-index="2">
+                    <option value="geschlechtsneutral" selected>geschlechtsneutral</option>
+                    <option value="männlich">männlich</option>
+                    <option value="weiblich">weiblich</option>
+                  </select>
+                </div>
+                <div class="mkb-fieldBlock mkb-char-age-wrap">
+                  <label class="mkb-label">Alter</label>
+                  <input class="field mkb-char-age" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off"
+                    placeholder="Alter (nur Zahlen)" data-char-index="2">
+                </div>
+              </div>
+              <div class="mkb-upload">
+                <div class="mkb-segTitle" style="margin-top: 6px;">Aussehen</div>
+                <div class="mkb-seg mkb-look-mode" data-char-index="2">
+                  <button type="button" class="mkb-segBtn selected" data-mode="photo">Foto hochladen</button>
+                  <button type="button" class="mkb-segBtn" data-mode="desc">Aussehen beschreiben</button>
+                </div>
+                <div class="mkb-uploadBox mkb-photo-wrap" data-char-index="2">
+                  <input class="mkb-file mkb-char-photo" type="file"
+                    accept="image/png, image/jpeg, image/webp, image/heic, image/heif, .heic, .heif"
+                    data-char-index="2">
+                  <div class="mkb-uploadInner">
+                    <div class="mkb-uploadIcon">⬆️</div>
+                    <div class="mkb-uploadText">Lade ein Foto als Grundlage für die Illustrationen hoch</div>
+                  </div>
+                </div>
+                <div class="mkb-fieldBlock mkb-desc-wrap" data-char-index="2" style="display:none; margin-top: 10px;">
+                  <label class="mkb-label">Aussehen beschreiben</label>
+                  <textarea class="field mkb-char-desc" rows="3"
+                    placeholder="z.B. grüne Augen, kurzer Pony, gelbe Jacke…" data-char-index="2"></textarea>
+                </div>
+                <div class="mkb-upload-status" id="mkbUploadStatus2"></div>
               </div>
             </div>
-            <div class="mkb-fieldBlock mkb-desc-wrap" data-char-index="3" style="display:none; margin-top: 10px;">
-              <label class="mkb-label">Aussehen beschreiben</label>
-              <textarea class="field mkb-char-desc" rows="3" placeholder="z.B. grüne Augen, kurzer Pony, gelbe Jacke…" data-char-index="3"></textarea>
-            </div>
-            <div class="mkb-upload-status" id="mkbUploadStatus3"></div>
           </div>
-        </div>
-      </div>
-      <div class="mkb-charBlock mkb-charBlock-hidden" data-char-index="4" id="mkbCharBlock4">
-        <div class="mkb-charForm">
-          <div class="mkb-charBlock-header"><span class="mkb-segTitle">Charakter 4</span><button type="button" class="mkb-removeChar" data-char-index="4">✕ Entfernen</button></div>
-          <div class="mkb-seg mkb-char-type-seg">
-            <button type="button" class="mkb-segBtn selected" data-type="Person">Person</button>
-            <button type="button" class="mkb-segBtn" data-type="Tier">Tier</button>
-            <button type="button" class="mkb-segBtn" data-type="Objekt">Objekt</button>
-          </div>
-          <div class="mkb-fieldBlock">
-            <label class="mkb-label">Name</label>
-            <input class="field mkb-char-name" placeholder="Name des Charakters" data-char-index="4">
-          </div>
-          <div class="mkb-fieldBlock">
-            <label class="mkb-label">Relation zum Hauptcharakter</label>
-            <div class="mkb-relation-chips">
-              <button type="button" class="mkb-relationChip" data-relation="Mutter">Mutter</button>
-              <button type="button" class="mkb-relationChip" data-relation="Vater">Vater</button>
-              <button type="button" class="mkb-relationChip" data-relation="Bruder">Bruder</button>
-              <button type="button" class="mkb-relationChip" data-relation="Schwester">Schwester</button>
-              <button type="button" class="mkb-relationChip" data-relation="Freund">Freund</button>
-              <button type="button" class="mkb-relationChip" data-relation="Freundin">Freundin</button>
-              <button type="button" class="mkb-relationChip" data-relation="Haustier">Haustier</button>
-              <button type="button" class="mkb-relationChip" data-relation="Kuscheltier">Kuscheltier</button>
-              <button type="button" class="mkb-relationChip" data-relation="Sonstiges">Sonstiges</button>
-            </div>
-          </div>
-          <div class="mkb-row2">
-            <div class="mkb-fieldBlock mkb-char-gender-wrap">
-              <label class="mkb-label">Geschlecht</label>
-              <select class="field mkb-char-gender" data-char-index="4">
-                <option value="geschlechtsneutral" selected>geschlechtsneutral</option>
-                <option value="männlich">männlich</option>
-                <option value="weiblich">weiblich</option>
-              </select>
-            </div>
-            <div class="mkb-fieldBlock mkb-char-age-wrap">
-              <label class="mkb-label">Alter</label>
-              <input class="field mkb-char-age" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Alter (nur Zahlen)" data-char-index="4">
-            </div>
-          </div>
-          <div class="mkb-upload">
-            <div class="mkb-segTitle" style="margin-top: 6px;">Aussehen</div>
-            <div class="mkb-seg mkb-look-mode" data-char-index="4">
-              <button type="button" class="mkb-segBtn selected" data-mode="photo">Foto hochladen</button>
-              <button type="button" class="mkb-segBtn" data-mode="desc">Aussehen beschreiben</button>
-            </div>
-            <div class="mkb-uploadBox mkb-photo-wrap" data-char-index="4">
-              <input class="mkb-file mkb-char-photo" type="file" accept="image/png, image/jpeg, image/webp, image/heic, image/heif, .heic, .heif" data-char-index="4">
-              <div class="mkb-uploadInner">
-                <div class="mkb-uploadIcon">⬆️</div>
-                <div class="mkb-uploadText">Lade ein Foto als Grundlage für die Illustrationen hoch</div>
+          <div class="mkb-charBlock mkb-charBlock-hidden" data-char-index="3" id="mkbCharBlock3">
+            <div class="mkb-charForm">
+              <div class="mkb-charBlock-header"><span class="mkb-segTitle">Charakter 3</span><button type="button"
+                  class="mkb-removeChar" data-char-index="3">✕ Entfernen</button></div>
+              <div class="mkb-seg mkb-char-type-seg">
+                <button type="button" class="mkb-segBtn selected" data-type="Person">Person</button>
+                <button type="button" class="mkb-segBtn" data-type="Tier">Tier</button>
+                <button type="button" class="mkb-segBtn" data-type="Objekt">Objekt</button>
+              </div>
+              <div class="mkb-fieldBlock">
+                <label class="mkb-label">Name</label>
+                <input class="field mkb-char-name" placeholder="Name des Charakters" data-char-index="3">
+              </div>
+              <div class="mkb-fieldBlock">
+                <label class="mkb-label">Relation zum Hauptcharakter</label>
+                <div class="mkb-relation-chips">
+                  <button type="button" class="mkb-relationChip" data-relation="Mutter">Mutter</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Vater">Vater</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Bruder">Bruder</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Schwester">Schwester</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Freund">Freund</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Freundin">Freundin</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Haustier">Haustier</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Kuscheltier">Kuscheltier</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Sonstiges">Sonstiges</button>
+                </div>
+              </div>
+              <div class="mkb-row2">
+                <div class="mkb-fieldBlock mkb-char-gender-wrap">
+                  <label class="mkb-label">Geschlecht</label>
+                  <select class="field mkb-char-gender" data-char-index="3">
+                    <option value="geschlechtsneutral" selected>geschlechtsneutral</option>
+                    <option value="männlich">männlich</option>
+                    <option value="weiblich">weiblich</option>
+                  </select>
+                </div>
+                <div class="mkb-fieldBlock mkb-char-age-wrap">
+                  <label class="mkb-label">Alter</label>
+                  <input class="field mkb-char-age" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off"
+                    placeholder="Alter (nur Zahlen)" data-char-index="3">
+                </div>
+              </div>
+              <div class="mkb-upload">
+                <div class="mkb-segTitle" style="margin-top: 6px;">Aussehen</div>
+                <div class="mkb-seg mkb-look-mode" data-char-index="3">
+                  <button type="button" class="mkb-segBtn selected" data-mode="photo">Foto hochladen</button>
+                  <button type="button" class="mkb-segBtn" data-mode="desc">Aussehen beschreiben</button>
+                </div>
+                <div class="mkb-uploadBox mkb-photo-wrap" data-char-index="3">
+                  <input class="mkb-file mkb-char-photo" type="file"
+                    accept="image/png, image/jpeg, image/webp, image/heic, image/heif, .heic, .heif"
+                    data-char-index="3">
+                  <div class="mkb-uploadInner">
+                    <div class="mkb-uploadIcon">⬆️</div>
+                    <div class="mkb-uploadText">Lade ein Foto als Grundlage für die Illustrationen hoch</div>
+                  </div>
+                </div>
+                <div class="mkb-fieldBlock mkb-desc-wrap" data-char-index="3" style="display:none; margin-top: 10px;">
+                  <label class="mkb-label">Aussehen beschreiben</label>
+                  <textarea class="field mkb-char-desc" rows="3"
+                    placeholder="z.B. grüne Augen, kurzer Pony, gelbe Jacke…" data-char-index="3"></textarea>
+                </div>
+                <div class="mkb-upload-status" id="mkbUploadStatus3"></div>
               </div>
             </div>
-            <div class="mkb-fieldBlock mkb-desc-wrap" data-char-index="4" style="display:none; margin-top: 10px;">
-              <label class="mkb-label">Aussehen beschreiben</label>
-              <textarea class="field mkb-char-desc" rows="3" placeholder="z.B. grüne Augen, kurzer Pony, gelbe Jacke…" data-char-index="4"></textarea>
-            </div>
-            <div class="mkb-upload-status" id="mkbUploadStatus4"></div>
           </div>
-        </div>
-      </div>
-      <div class="mkb-charBlock mkb-charBlock-hidden" data-char-index="5" id="mkbCharBlock5">
-        <div class="mkb-charForm">
-          <div class="mkb-charBlock-header"><span class="mkb-segTitle">Charakter 5</span><button type="button" class="mkb-removeChar" data-char-index="5">✕ Entfernen</button></div>
-          <div class="mkb-seg mkb-char-type-seg">
-            <button type="button" class="mkb-segBtn selected" data-type="Person">Person</button>
-            <button type="button" class="mkb-segBtn" data-type="Tier">Tier</button>
-            <button type="button" class="mkb-segBtn" data-type="Objekt">Objekt</button>
-          </div>
-          <div class="mkb-fieldBlock">
-            <label class="mkb-label">Name</label>
-            <input class="field mkb-char-name" placeholder="Name des Charakters" data-char-index="5">
-          </div>
-          <div class="mkb-fieldBlock">
-            <label class="mkb-label">Relation zum Hauptcharakter</label>
-            <div class="mkb-relation-chips">
-              <button type="button" class="mkb-relationChip" data-relation="Mutter">Mutter</button>
-              <button type="button" class="mkb-relationChip" data-relation="Vater">Vater</button>
-              <button type="button" class="mkb-relationChip" data-relation="Bruder">Bruder</button>
-              <button type="button" class="mkb-relationChip" data-relation="Schwester">Schwester</button>
-              <button type="button" class="mkb-relationChip" data-relation="Freund">Freund</button>
-              <button type="button" class="mkb-relationChip" data-relation="Freundin">Freundin</button>
-              <button type="button" class="mkb-relationChip" data-relation="Haustier">Haustier</button>
-              <button type="button" class="mkb-relationChip" data-relation="Kuscheltier">Kuscheltier</button>
-              <button type="button" class="mkb-relationChip" data-relation="Sonstiges">Sonstiges</button>
-            </div>
-          </div>
-          <div class="mkb-row2">
-            <div class="mkb-fieldBlock mkb-char-gender-wrap">
-              <label class="mkb-label">Geschlecht</label>
-              <select class="field mkb-char-gender" data-char-index="5">
-                <option value="geschlechtsneutral" selected>geschlechtsneutral</option>
-                <option value="männlich">männlich</option>
-                <option value="weiblich">weiblich</option>
-              </select>
-            </div>
-            <div class="mkb-fieldBlock mkb-char-age-wrap">
-              <label class="mkb-label">Alter</label>
-              <input class="field mkb-char-age" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Alter (nur Zahlen)" data-char-index="5">
-            </div>
-          </div>
-          <div class="mkb-upload">
-            <div class="mkb-segTitle" style="margin-top: 6px;">Aussehen</div>
-            <div class="mkb-seg mkb-look-mode" data-char-index="5">
-              <button type="button" class="mkb-segBtn selected" data-mode="photo">Foto hochladen</button>
-              <button type="button" class="mkb-segBtn" data-mode="desc">Aussehen beschreiben</button>
-            </div>
-            <div class="mkb-uploadBox mkb-photo-wrap" data-char-index="5">
-              <input class="mkb-file mkb-char-photo" type="file" accept="image/png, image/jpeg, image/webp, image/heic, image/heif, .heic, .heif" data-char-index="5">
-              <div class="mkb-uploadInner">
-                <div class="mkb-uploadIcon">⬆️</div>
-                <div class="mkb-uploadText">Lade ein Foto als Grundlage für die Illustrationen hoch</div>
+          <div class="mkb-charBlock mkb-charBlock-hidden" data-char-index="4" id="mkbCharBlock4">
+            <div class="mkb-charForm">
+              <div class="mkb-charBlock-header"><span class="mkb-segTitle">Charakter 4</span><button type="button"
+                  class="mkb-removeChar" data-char-index="4">✕ Entfernen</button></div>
+              <div class="mkb-seg mkb-char-type-seg">
+                <button type="button" class="mkb-segBtn selected" data-type="Person">Person</button>
+                <button type="button" class="mkb-segBtn" data-type="Tier">Tier</button>
+                <button type="button" class="mkb-segBtn" data-type="Objekt">Objekt</button>
+              </div>
+              <div class="mkb-fieldBlock">
+                <label class="mkb-label">Name</label>
+                <input class="field mkb-char-name" placeholder="Name des Charakters" data-char-index="4">
+              </div>
+              <div class="mkb-fieldBlock">
+                <label class="mkb-label">Relation zum Hauptcharakter</label>
+                <div class="mkb-relation-chips">
+                  <button type="button" class="mkb-relationChip" data-relation="Mutter">Mutter</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Vater">Vater</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Bruder">Bruder</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Schwester">Schwester</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Freund">Freund</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Freundin">Freundin</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Haustier">Haustier</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Kuscheltier">Kuscheltier</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Sonstiges">Sonstiges</button>
+                </div>
+              </div>
+              <div class="mkb-row2">
+                <div class="mkb-fieldBlock mkb-char-gender-wrap">
+                  <label class="mkb-label">Geschlecht</label>
+                  <select class="field mkb-char-gender" data-char-index="4">
+                    <option value="geschlechtsneutral" selected>geschlechtsneutral</option>
+                    <option value="männlich">männlich</option>
+                    <option value="weiblich">weiblich</option>
+                  </select>
+                </div>
+                <div class="mkb-fieldBlock mkb-char-age-wrap">
+                  <label class="mkb-label">Alter</label>
+                  <input class="field mkb-char-age" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off"
+                    placeholder="Alter (nur Zahlen)" data-char-index="4">
+                </div>
+              </div>
+              <div class="mkb-upload">
+                <div class="mkb-segTitle" style="margin-top: 6px;">Aussehen</div>
+                <div class="mkb-seg mkb-look-mode" data-char-index="4">
+                  <button type="button" class="mkb-segBtn selected" data-mode="photo">Foto hochladen</button>
+                  <button type="button" class="mkb-segBtn" data-mode="desc">Aussehen beschreiben</button>
+                </div>
+                <div class="mkb-uploadBox mkb-photo-wrap" data-char-index="4">
+                  <input class="mkb-file mkb-char-photo" type="file"
+                    accept="image/png, image/jpeg, image/webp, image/heic, image/heif, .heic, .heif"
+                    data-char-index="4">
+                  <div class="mkb-uploadInner">
+                    <div class="mkb-uploadIcon">⬆️</div>
+                    <div class="mkb-uploadText">Lade ein Foto als Grundlage für die Illustrationen hoch</div>
+                  </div>
+                </div>
+                <div class="mkb-fieldBlock mkb-desc-wrap" data-char-index="4" style="display:none; margin-top: 10px;">
+                  <label class="mkb-label">Aussehen beschreiben</label>
+                  <textarea class="field mkb-char-desc" rows="3"
+                    placeholder="z.B. grüne Augen, kurzer Pony, gelbe Jacke…" data-char-index="4"></textarea>
+                </div>
+                <div class="mkb-upload-status" id="mkbUploadStatus4"></div>
               </div>
             </div>
-            <div class="mkb-fieldBlock mkb-desc-wrap" data-char-index="5" style="display:none; margin-top: 10px;">
-              <label class="mkb-label">Aussehen beschreiben</label>
-              <textarea class="field mkb-char-desc" rows="3" placeholder="z.B. grüne Augen, kurzer Pony, gelbe Jacke…" data-char-index="5"></textarea>
+          </div>
+          <div class="mkb-charBlock mkb-charBlock-hidden" data-char-index="5" id="mkbCharBlock5">
+            <div class="mkb-charForm">
+              <div class="mkb-charBlock-header"><span class="mkb-segTitle">Charakter 5</span><button type="button"
+                  class="mkb-removeChar" data-char-index="5">✕ Entfernen</button></div>
+              <div class="mkb-seg mkb-char-type-seg">
+                <button type="button" class="mkb-segBtn selected" data-type="Person">Person</button>
+                <button type="button" class="mkb-segBtn" data-type="Tier">Tier</button>
+                <button type="button" class="mkb-segBtn" data-type="Objekt">Objekt</button>
+              </div>
+              <div class="mkb-fieldBlock">
+                <label class="mkb-label">Name</label>
+                <input class="field mkb-char-name" placeholder="Name des Charakters" data-char-index="5">
+              </div>
+              <div class="mkb-fieldBlock">
+                <label class="mkb-label">Relation zum Hauptcharakter</label>
+                <div class="mkb-relation-chips">
+                  <button type="button" class="mkb-relationChip" data-relation="Mutter">Mutter</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Vater">Vater</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Bruder">Bruder</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Schwester">Schwester</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Freund">Freund</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Freundin">Freundin</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Haustier">Haustier</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Kuscheltier">Kuscheltier</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Sonstiges">Sonstiges</button>
+                </div>
+              </div>
+              <div class="mkb-row2">
+                <div class="mkb-fieldBlock mkb-char-gender-wrap">
+                  <label class="mkb-label">Geschlecht</label>
+                  <select class="field mkb-char-gender" data-char-index="5">
+                    <option value="geschlechtsneutral" selected>geschlechtsneutral</option>
+                    <option value="männlich">männlich</option>
+                    <option value="weiblich">weiblich</option>
+                  </select>
+                </div>
+                <div class="mkb-fieldBlock mkb-char-age-wrap">
+                  <label class="mkb-label">Alter</label>
+                  <input class="field mkb-char-age" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off"
+                    placeholder="Alter (nur Zahlen)" data-char-index="5">
+                </div>
+              </div>
+              <div class="mkb-upload">
+                <div class="mkb-segTitle" style="margin-top: 6px;">Aussehen</div>
+                <div class="mkb-seg mkb-look-mode" data-char-index="5">
+                  <button type="button" class="mkb-segBtn selected" data-mode="photo">Foto hochladen</button>
+                  <button type="button" class="mkb-segBtn" data-mode="desc">Aussehen beschreiben</button>
+                </div>
+                <div class="mkb-uploadBox mkb-photo-wrap" data-char-index="5">
+                  <input class="mkb-file mkb-char-photo" type="file"
+                    accept="image/png, image/jpeg, image/webp, image/heic, image/heif, .heic, .heif"
+                    data-char-index="5">
+                  <div class="mkb-uploadInner">
+                    <div class="mkb-uploadIcon">⬆️</div>
+                    <div class="mkb-uploadText">Lade ein Foto als Grundlage für die Illustrationen hoch</div>
+                  </div>
+                </div>
+                <div class="mkb-fieldBlock mkb-desc-wrap" data-char-index="5" style="display:none; margin-top: 10px;">
+                  <label class="mkb-label">Aussehen beschreiben</label>
+                  <textarea class="field mkb-char-desc" rows="3"
+                    placeholder="z.B. grüne Augen, kurzer Pony, gelbe Jacke…" data-char-index="5"></textarea>
+                </div>
+                <div class="mkb-upload-status" id="mkbUploadStatus5"></div>
+              </div>
             </div>
-            <div class="mkb-upload-status" id="mkbUploadStatus5"></div>
           </div>
         </div>
+        <div class="mkb-fieldBlock" style="margin-top: 24px;">
+          <button type="button" class="btn" id="mkbAddChar">＋ Charakter</button>
+        </div>
+
+        <div class="error" id="mkb_char_error">Bitte fülle die Hauptfigur aus.</div>
       </div>
-    </div>
-    <div class="mkb-fieldBlock" style="margin-top: 24px;">
-      <button type="button" class="btn" id="mkbAddChar">＋ Charakter</button>
-    </div>
-  
-    <div class="error" id="mkb_char_error">Bitte fülle die Hauptfigur aus.</div>
-  </div>
-  
+
       <!-- Gruppe 4: Art Style (nach Namen der Hauptfigur) -->
       <div class="group locked" data-group="style" data-unlock-when="mainchar-name">
         <div class="group-title">Wähle den Illustrationsstil</div>
         <div class="grid">
           <div class="card" data-target="#mkb_style" data-value="watercolor_soft">
-            <div class="icon">🎨</div><div class="label">Aquarell (soft)</div>
+            <div class="icon">🎨</div>
+            <div class="label">Aquarell (soft)</div>
           </div>
           <div class="card" data-target="#mkb_style" data-value="classic_storybook">
-            <div class="icon">📚</div><div class="label">Klassisch (storybook)</div>
+            <div class="icon">📚</div>
+            <div class="label">Klassisch (storybook)</div>
           </div>
           <div class="card" data-target="#mkb_style" data-value="comic_bold">
-            <div class="icon">💥</div><div class="label">Comic (bold)</div>
+            <div class="icon">💥</div>
+            <div class="label">Comic (bold)</div>
           </div>
           <div class="card" data-target="#mkb_style" data-value="pixar_3d">
-            <div class="icon">🧸</div><div class="label">3D (pixar-like)</div>
+            <div class="icon">🧸</div>
+            <div class="label">3D (pixar-like)</div>
           </div>
         </div>
       </div>
-  
+
       <!-- Gruppe: Sonstige Wünsche (optional, nach Illustrationsstil) -->
       <div class="group locked" data-group="wishes" data-unlock-when="style">
         <div class="group-title">Gibt es noch etwas, das wir wissen sollten?</div>
         <div class="mkb-charForm">
           <div class="mkb-fieldBlock">
             <label class="mkb-label" for="mkbWishesText">Sonstige Wünsche (optional)</label>
-            <textarea class="field" id="mkbWishesText" rows="4" placeholder="z.B. bestimmte Reime, Spitznamen, besondere Orte, Insider-Witze…"></textarea>
+            <textarea class="field" id="mkbWishesText" rows="4"
+              placeholder="z.B. bestimmte Reime, Spitznamen, besondere Orte, Insider-Witze…"></textarea>
           </div>
         </div>
       </div>
@@ -496,7 +581,8 @@
         <button type="button" id="mkbEditBtn" class="btn" style="margin-top: 20px;">↩ Auswahl ändern</button>
       </div>
     </div>
-</div>
-<script src="mkb-builder.js" defer></script>
+  </div>
+  <script src="mkb-builder.js" defer></script>
 </body>
+
 </html>
