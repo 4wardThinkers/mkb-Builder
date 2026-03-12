@@ -316,7 +316,7 @@ mainPhotoEl?.addEventListener('change', () => {
     }
   
     function allComplete() {
-      return isChosen('#mkb_age') && isChosen('#mkb_theme') && isChosen('#mkb_narrative') && isChosen('#mkb_message') && charsComplete() && isChosen('#mkb_style');
+      return isChosen('#mkb_age') && isChosen('#mkb_theme') && isChosen('#mkb_narrative') && isChosen('#mkb_message') && charsComplete() && isChosen('#mkb_style') && isChosen('#mkb_font');
     }
   
     const finishWrap = q('#mkbFinishWrap');
@@ -326,7 +326,7 @@ mainPhotoEl?.addEventListener('change', () => {
     const editBtn    = q('#mkbEditBtn');
     const panelEl    = q('.panel');
 
-    const GROUP_ORDER = ['age', 'theme', 'narrative', 'message', 'chars', 'style', 'wishes'];
+    const GROUP_ORDER = ['age', 'theme', 'narrative', 'message', 'chars', 'style', 'font', 'wishes'];
 
     function restoreGroupToPanel(groupEl) {
       if (!panelEl) return;
@@ -359,6 +359,7 @@ mainPhotoEl?.addEventListener('change', () => {
         narrative: q('#mkb_narrative')?.value || '',
         message:   q('#mkb_message')?.value || '',
         style:     q('#mkb_style')?.value || '',
+        font:      q('#mkb_font')?.value || '',
         wishes:    q('#mkb_wishes')?.value || '',
       };
       summaryContent.querySelectorAll('.mkb-summary-row:not([data-group="chars"])').forEach(row => {
@@ -396,6 +397,7 @@ mainPhotoEl?.addEventListener('change', () => {
         { group: 'message',   ok: () => isChosen('#mkb_message') },
         { group: 'chars',     ok: () => charsComplete() },
         { group: 'style',     ok: () => isChosen('#mkb_style') },
+        { group: 'font',      ok: () => isChosen('#mkb_font') },
       ];
       for (const { group, ok } of checks) {
         if (!ok()) return panelEl?.querySelector(`.group[data-group="${group}"]`);
@@ -414,6 +416,13 @@ mainPhotoEl?.addEventListener('change', () => {
         scope.classList.remove('mkb-complete');
         if (summaryEl) summaryEl.style.display = 'none';
         panelEl?.classList.remove('mkb-panel-summary');
+      }
+      // Sync JSON into the single output input (submitted via form= attribute)
+      const outputInput = document.getElementById('mkb_output');
+      if (outputInput) {
+        const props = complete ? collectProperties() : {};
+        if (complete) props['_mkb_id'] = Date.now().toString(36);
+        outputInput.value = complete ? JSON.stringify(props) : '';
       }
     }
 
@@ -463,6 +472,7 @@ mainPhotoEl?.addEventListener('change', () => {
         { key: 'Botschaft / Werte', val: q('#mkb_message')?.value,                                 group: 'message' },
         { key: 'Figuren',           val: null, charItems,                                           group: 'chars' },
         { key: 'Illustrationsstil', val: q('#mkb_style')?.value,                                   group: 'style' },
+        { key: 'Schriftart',        val: q('#mkb_font')?.value,                                    group: 'font' },
         { key: 'Sonstige Wünsche',  val: q('#mkb_wishes')?.value,                                  group: 'wishes' },
       ];
 
@@ -529,6 +539,7 @@ mainPhotoEl?.addEventListener('change', () => {
         if (dep === 'message') unlocked = isChosen('#mkb_message');
         if (dep === 'chars') unlocked = charsComplete();
         if (dep === 'style') unlocked = isChosen('#mkb_style');
+        if (dep === 'font') unlocked = isChosen('#mkb_font');
         if (dep === 'mainchar-name') {
           const hiddenName = (q('#mkb_char_1_name')?.value?.trim() || '');
           const uiName = (mainNameEl?.value?.trim() || '');
@@ -542,7 +553,7 @@ mainPhotoEl?.addEventListener('change', () => {
   
     // Wenn man oben etwas ändert: downstream leeren + wieder verstecken
     function clearSelectionsAfter(groupName) {
-      const order = ['age','theme','narrative','message','chars','style','wishes'];
+      const order = ['age','theme','narrative','message','chars','style','font','wishes'];
       const idx = order.indexOf(groupName);
       if (idx === -1) return;
 
@@ -566,6 +577,10 @@ mainPhotoEl?.addEventListener('change', () => {
       if (toClear.includes('style')) {
         const el = q('#mkb_style'); if (el) el.value = '';
         qa('[data-group="style"] .card').forEach(c => c.classList.remove('selected'));
+      }
+      if (toClear.includes('font')) {
+        const el = q('#mkb_font'); if (el) el.value = '';
+        qa('[data-group="font"] .card').forEach(c => c.classList.remove('selected'));
       }
       if (toClear.includes('wishes')) {
         const el = q('#mkb_wishes'); if (el) el.value = '';
@@ -1074,19 +1089,28 @@ mainPhotoEl?.addEventListener('change', () => {
     // This avoids double-fetch and keeps the native cart drawer working.
 
     function collectProperties() {
+      const get = (id) => (q(id)?.value || '').trim();
       const props = {};
-      root.querySelectorAll('input[name^="properties["]').forEach(input => {
-        const val = (input.value || '').trim();
-        if (!val) return;
-        const key = input.name.replace(/^properties\[/, '').replace(/\]$/, '');
-        props[key] = val;
-      });
+      const age           = get('#mkb_age');
+      const theme         = get('#mkb_theme');
+      const narrative     = get('#mkb_narrative');
+      const values        = get('#mkb_message');
+      const style         = get('#mkb_style');
+      const font          = get('#mkb_font');
+      const preface       = get('#mkb_wishes');
+      if (age)       props['age_group']        = age;
+      if (theme)     props['theme']            = theme;
+      if (narrative) props['narrative_style']  = narrative;
+      if (values)    props['important_values'] = values;
+      if (style)     props['art_style']        = style;
+      if (font)      props['font']             = font;
+      if (preface)   props['preface']          = preface;
       return props;
     }
 
     function hookProductForm() {
-      // Use *=  (contains) so localized URLs like /de/cart/add also match
       const productForm =
+        document.getElementById('product-form-template--27316906033536__main') ||
         document.querySelector('form[action*="cart/add"]') ||
         document.querySelector('product-form form');
 
@@ -1094,33 +1118,11 @@ mainPhotoEl?.addEventListener('change', () => {
 
       if (!productForm) return;
 
-      // Capture phase → runs before Dawn's bubble-phase submit handler
+      // Log only – data is submitted via #mkb_output with form= attribute
       productForm.addEventListener('submit', () => {
         const isComplete = scope.classList.contains('mkb-complete');
-        console.log('[MKB] submit fired – mkb-complete:', isComplete, '| scope el:', scope.tagName + '.' + [...scope.classList].join('.'));
-
-        if (!isComplete) return;
-
-        // Remove leftovers from any previous click
-        productForm.querySelectorAll('.mkb-injected-prop').forEach(el => el.remove());
-
-        const properties = collectProperties();
-        // Unique ID (hidden from customer via _ prefix) prevents Shopify
-        // from merging two different custom orders into qty +1
-        properties['_mkb_id'] = Date.now().toString(36);
-
-        console.log('[MKB] injecting properties:', properties);
-
-        Object.entries(properties).forEach(([key, val]) => {
-          const inp = document.createElement('input');
-          inp.type      = 'hidden';
-          inp.name      = `properties[${key}]`;
-          inp.value     = val;
-          inp.className = 'mkb-injected-prop';
-          productForm.appendChild(inp);
-        });
-
-        console.log('[MKB] done – injected', Object.keys(properties).length, 'properties');
+        console.log('[MKB] submit fired – mkb-complete:', isComplete);
+        console.log('[MKB] properties[Konfiguration]:', document.getElementById('mkb_output')?.value || '(empty)');
       }, true /* capture phase */);
     }
 
