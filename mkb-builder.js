@@ -99,6 +99,14 @@ const mainDescWrap = root.querySelector('#mkbMainDescWrap');
 const mainDescEl = root.querySelector('#mkbMainDesc');
 const mainPhotoHint = root.querySelector('#mkbMainPhotoHint');
 const mainInterestsEl = root.querySelector('#mkbMainInterests');
+const mainSubtypeWrap = root.querySelector('#mkbMainSubtypeWrap');
+const mainSubtypeLabel = root.querySelector('#mkbMainSubtypeLabel');
+const mainSubtypeEl = root.querySelector('#mkbMainSubtype');
+
+const SUBTYPE_CONFIG = {
+  Tier:   { label: 'Um was für ein Tier handelt es sich?', placeholder: 'z.B. Hund, Katze, Löwe…' },
+  Objekt: { label: 'Um was für ein Objekt handelt es sich?', placeholder: 'z.B. Teddy, Auto, Zauberstab…' },
+};
 
 function enforceDigits(el) {
   if (!el) return;
@@ -120,15 +128,23 @@ function setMainType(type){
   const typeHidden = q('#mkb_char_1_type');
   if (typeHidden) typeHidden.value = type;
 
-  // optional: Gender/Age nur für Person
+  // Gender/Age nur für Person
   const isPerson = type === 'Person';
   if (genderWrap) genderWrap.style.display = isPerson ? '' : 'none';
   if (ageWrap) ageWrap.style.display = isPerson ? '' : 'none';
-
-  // wenn nicht Person: Werte leeren (optional)
   if (!isPerson) {
     if (mainGenderEl) mainGenderEl.value = '';
     if (mainAgeEl) mainAgeEl.value = '';
+  }
+
+  // Subtype-Feld für Tier / Objekt
+  const subtypeCfg = SUBTYPE_CONFIG[type];
+  if (mainSubtypeWrap) mainSubtypeWrap.style.display = subtypeCfg ? '' : 'none';
+  if (subtypeCfg) {
+    if (mainSubtypeLabel) mainSubtypeLabel.textContent = subtypeCfg.label;
+    if (mainSubtypeEl) mainSubtypeEl.placeholder = subtypeCfg.placeholder;
+  } else {
+    if (mainSubtypeEl) mainSubtypeEl.value = '';
   }
 
   // in properties schreiben
@@ -162,9 +178,7 @@ function syncMainFieldsToHidden(){
     lookHidden.value = mode === 'desc' ? (mainDescEl?.value || '').trim() : '';
   }
 
-  // age as plain string
-  const roleHidden = q('#mkb_char_1_role');
-  if (roleHidden) roleHidden.value = (mainAgeEl?.value || '').trim();
+  // char 1 role is always Hauptcharakter — no hidden input needed
 
   if ((mainNameEl?.value || '').trim()) clearFieldError(mainNameEl);
   if ((mainAgeEl?.value || '').trim()) clearFieldError(mainAgeEl);
@@ -230,7 +244,7 @@ mainDescEl?.addEventListener('input', syncMainFieldsToHidden);
 mainDescEl?.addEventListener('change', syncMainFieldsToHidden);
 
 // Inputs synchronisieren
-[mainNameEl, mainGenderEl, mainAgeEl, mainInterestsEl].forEach(el=>{
+[mainNameEl, mainGenderEl, mainAgeEl, mainInterestsEl, mainSubtypeEl].forEach(el=>{
   el?.addEventListener('input', syncMainFieldsToHidden);
   el?.addEventListener('change', syncMainFieldsToHidden);
 });
@@ -409,7 +423,6 @@ mainPhotoEl?.addEventListener('change', () => {
       const outputInput = document.getElementById('mkb_output');
       if (outputInput) {
         const props = complete ? collectProperties() : {};
-        if (complete) props['_mkb_id'] = Date.now().toString(36);
         outputInput.value = complete ? JSON.stringify(props) : '';
       }
     }
@@ -596,6 +609,8 @@ mainPhotoEl?.addEventListener('change', () => {
         if (mainPhotoWrap) mainPhotoWrap.style.display = '';
         if (mainDescWrap) mainDescWrap.style.display = 'none';
         if (mainPhotoHint) mainPhotoHint.style.display = '';
+        if (mainSubtypeEl) mainSubtypeEl.value = '';
+        if (mainSubtypeWrap) mainSubtypeWrap.style.display = 'none';
         clearCharBlocks2to5();
         updateCharBlocksVisibility();
       }
@@ -708,7 +723,7 @@ mainPhotoEl?.addEventListener('change', () => {
       const relationH = q(`#mkb_char_${index}_relation`);
       if (typeH) typeH.value = type;
       if (nameH) nameH.value = name;
-      if (roleH) roleH.value = (ageEl?.value || '').trim(); // age as plain string
+      if (roleH) roleH.value = block.querySelector('.mkb-roleChip.selected')?.getAttribute('data-role') || '';
       if (relationH) relationH.value = relation;
       // interests
       const interestsEl = block.querySelector('.mkb-char-interests');
@@ -730,7 +745,7 @@ mainPhotoEl?.addEventListener('change', () => {
       if (!block) return;
       const type = (q(`#mkb_char_${index}_type`)?.value || '').trim();
       const name = (q(`#mkb_char_${index}_name`)?.value || '').trim();
-      const age = (q(`#mkb_char_${index}_role`)?.value || '').trim(); // role stores age as plain string
+      const role = (q(`#mkb_char_${index}_role`)?.value || '').trim();
       const interests = (q(`#mkb_char_${index}_likes`)?.value || '').trim();
       const description = (q(`#mkb_char_${index}_look`)?.value || '').trim();
       const nameEl = block.querySelector('.mkb-char-name');
@@ -754,7 +769,9 @@ mainPhotoEl?.addEventListener('change', () => {
       const ageWrapEl = block.querySelector('.mkb-char-age-wrap');
       if (genderWrapEl) genderWrapEl.style.display = isPerson ? '' : 'none';
       if (ageWrapEl) ageWrapEl.style.display = isPerson ? '' : 'none';
-      if (ageEl) ageEl.value = age;
+      block.querySelectorAll('.mkb-roleChip').forEach(btn => {
+        btn.classList.toggle('selected', btn.getAttribute('data-role') === role);
+      });
       const relation = (q(`#mkb_char_${index}_relation`)?.value || '').trim();
       block.querySelectorAll('.mkb-relationChip').forEach(btn => {
         btn.classList.toggle('selected', btn.getAttribute('data-relation') === relation);
@@ -791,6 +808,10 @@ mainPhotoEl?.addEventListener('change', () => {
           const descWrap = block.querySelector('.mkb-desc-wrap');
           if (nameEl) nameEl.value = '';
           if (interestsEl) interestsEl.value = '';
+          const subtypeWrapEl = block.querySelector('.mkb-char-subtype-wrap');
+          const subtypeInputEl = block.querySelector('.mkb-char-subtype');
+          if (subtypeInputEl) subtypeInputEl.value = '';
+          if (subtypeWrapEl) subtypeWrapEl.style.display = 'none';
           if (genderEl) genderEl.value = '';
           if (ageEl) ageEl.value = '';
           if (photoEl) photoEl.value = '';
@@ -835,6 +856,10 @@ mainPhotoEl?.addEventListener('change', () => {
       const descWrap = block.querySelector('.mkb-desc-wrap');
       if (nameEl) nameEl.value = '';
       if (interestsEl) interestsEl.value = '';
+      const subtypeWrapEl = block.querySelector('.mkb-char-subtype-wrap');
+      const subtypeInputEl = block.querySelector('.mkb-char-subtype');
+      if (subtypeInputEl) subtypeInputEl.value = '';
+      if (subtypeWrapEl) subtypeWrapEl.style.display = 'none';
       if (genderEl) genderEl.value = '';
       if (ageEl) ageEl.value = '';
       if (photoEl) photoEl.value = '';
@@ -845,6 +870,7 @@ mainPhotoEl?.addEventListener('change', () => {
       if (descWrap) descWrap.style.display = 'none';
       const statusEl = root.querySelector(`#mkbUploadStatus${index}`);
       if (statusEl) statusEl.textContent = '';
+      block.querySelectorAll('.mkb-roleChip').forEach(btn => btn.classList.remove('selected'));
       block.querySelectorAll('.mkb-relationChip').forEach(btn => btn.classList.remove('selected'));
       block.querySelectorAll('.mkb-field-error').forEach(el => clearFieldError(el));
     }
@@ -872,6 +898,14 @@ mainPhotoEl?.addEventListener('change', () => {
       if (!block) return;
       const removeBtn = block.querySelector('.mkb-removeChar');
       removeBtn?.addEventListener('click', () => removeCharBlock(index));
+      block.querySelector('.mkb-role-chips')?.addEventListener('click', e => {
+        const chip = e.target.closest('.mkb-roleChip');
+        if (!chip) return;
+        const wasSelected = chip.classList.contains('selected');
+        block.querySelectorAll('.mkb-roleChip').forEach(b => b.classList.remove('selected'));
+        if (!wasSelected) chip.classList.add('selected');
+        syncCharBlockToHidden(index);
+      });
       block.querySelector('.mkb-relation-chips')?.addEventListener('click', e => {
         const chip = e.target.closest('.mkb-relationChip');
         if (!chip) return;
@@ -906,9 +940,22 @@ mainPhotoEl?.addEventListener('change', () => {
           if (genderEl) genderEl.value = '';
           if (ageEl) ageEl.value = '';
         }
+        // Subtype-Feld
+        const subtypeWrap = block.querySelector('.mkb-char-subtype-wrap');
+        const subtypeLabel = block.querySelector('.mkb-char-subtype-label');
+        const subtypeInput = block.querySelector('.mkb-char-subtype');
+        const subtypeCfg = SUBTYPE_CONFIG[type];
+        if (subtypeWrap) subtypeWrap.style.display = subtypeCfg ? '' : 'none';
+        if (subtypeCfg) {
+          if (subtypeLabel) subtypeLabel.textContent = subtypeCfg.label;
+          if (subtypeInput) subtypeInput.placeholder = subtypeCfg.placeholder;
+        } else {
+          if (subtypeInput) subtypeInput.value = '';
+        }
         syncCharBlockToHidden(index);
       });
-      [nameEl, interestsEl, genderEl, ageEl].forEach(el => {
+      const subtypeEl = block.querySelector('.mkb-char-subtype');
+      [nameEl, interestsEl, subtypeEl, genderEl, ageEl].forEach(el => {
         el?.addEventListener('input', () => syncCharBlockToHidden(index));
         el?.addEventListener('change', () => syncCharBlockToHidden(index));
       });
@@ -1109,14 +1156,21 @@ mainPhotoEl?.addEventListener('change', () => {
         const name = get(`#mkb_char_${i}_name`);
         if (!name) continue;
         const char = { name };
+        char['role'] = i === 1 ? 'Hauptcharakter' : (get(`#mkb_char_${i}_role`) || 'Nebencharakter');
         const character_type = get(`#mkb_char_${i}_type`);
         const interests      = get(`#mkb_char_${i}_likes`);
         const description    = get(`#mkb_char_${i}_look`);
         const photo_s3_key   = get(`#mkb_char_${i}_securefileid`);
-        if (character_type) char['character_type'] = character_type;
-        if (interests)      char['interests']      = interests;
-        if (description)    char['description']    = description;
-        if (photo_s3_key)   char['photo_s3_key']   = photo_s3_key;
+        // subtype from UI (Tier/Objekt only)
+        const subtypeEl = i === 1
+          ? root.querySelector('#mkbMainSubtype')
+          : root.querySelector(`.mkb-charBlock[data-char-index="${i}"] .mkb-char-subtype`);
+        const character_subtype = (subtypeEl?.value || '').trim();
+        if (character_type)    char['character_type']    = character_type;
+        if (character_subtype) char['character_subtype'] = character_subtype;
+        if (interests)         char['interests']         = interests;
+        if (description)       char['description']       = description;
+        if (photo_s3_key)      char['photo_s3_key']      = photo_s3_key;
         characters.push(char);
       }
       if (characters.length) props['characters'] = characters;
