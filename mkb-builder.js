@@ -98,6 +98,7 @@ const mainPhotoWrap = root.querySelector('#mkbMainPhotoWrap');
 const mainDescWrap = root.querySelector('#mkbMainDescWrap');
 const mainDescEl = root.querySelector('#mkbMainDesc');
 const mainPhotoHint = root.querySelector('#mkbMainPhotoHint');
+const mainInterestsEl = root.querySelector('#mkbMainInterests');
 
 function enforceDigits(el) {
   if (!el) return;
@@ -147,36 +148,23 @@ function setMainType(type){
 }
 
 function syncMainFieldsToHidden(){
-  // Name -> Charakter 1 Name
   const nameHidden = q('#mkb_char_1_name');
   if (nameHidden) nameHidden.value = (mainNameEl?.value || '').trim();
 
-  // Gender/Age optional in Rolle/Interessen mitschreiben (wenn du willst)
-  const roleHidden = q('#mkb_char_1_role');
-  if (roleHidden) {
-    const t = (q('#mkb_char_1_type')?.value || '').trim();
-    const g = (mainGenderEl?.value || '').trim();
-    const a = (mainAgeEl?.value || '').trim();
-
-    // Beispiel: Rolle = "Geschlecht: ..., Alter: ..."
-    // (Passe das Format an, wie du es später brauchst.)
-    let meta = [];
-    if (t === 'Person' && g) meta.push(`Geschlecht: ${g}`);
-    if (t === 'Person' && a) meta.push(`Alter: ${a}`);
-    roleHidden.value = meta.join(', ');
-  }
-
-  // Aussehen: entweder Foto oder Beschreibung. SecureFileID nur bei Foto.
+  // interests
   const likesHidden = q('#mkb_char_1_likes');
+  if (likesHidden) likesHidden.value = (mainInterestsEl?.value || '').trim();
+
+  // description (text appearance)
+  const lookHidden = q('#mkb_char_1_look');
   const mode = mainLookModeSeg?.querySelector('.mkb-segBtn.selected')?.getAttribute('data-mode') || 'photo';
-  if (likesHidden) {
-    if (mode === 'desc') {
-      const desc = (mainDescEl?.value || '').trim();
-      likesHidden.value = desc ? `Aussehen: ${desc}` : '';
-    } else {
-      likesHidden.value = mainPhotoEl?.files?.[0] ? `Foto: ${mainPhotoEl.files[0].name}` : '';
-    }
+  if (lookHidden) {
+    lookHidden.value = mode === 'desc' ? (mainDescEl?.value || '').trim() : '';
   }
+
+  // age as plain string
+  const roleHidden = q('#mkb_char_1_role');
+  if (roleHidden) roleHidden.value = (mainAgeEl?.value || '').trim();
 
   if ((mainNameEl?.value || '').trim()) clearFieldError(mainNameEl);
   if ((mainAgeEl?.value || '').trim()) clearFieldError(mainAgeEl);
@@ -242,7 +230,7 @@ mainDescEl?.addEventListener('input', syncMainFieldsToHidden);
 mainDescEl?.addEventListener('change', syncMainFieldsToHidden);
 
 // Inputs synchronisieren
-[mainNameEl, mainGenderEl, mainAgeEl].forEach(el=>{
+[mainNameEl, mainGenderEl, mainAgeEl, mainInterestsEl].forEach(el=>{
   el?.addEventListener('input', syncMainFieldsToHidden);
   el?.addEventListener('change', syncMainFieldsToHidden);
 });
@@ -716,19 +704,22 @@ mainPhotoEl?.addEventListener('change', () => {
       const nameH = q(`#mkb_char_${index}_name`);
       const roleH = q(`#mkb_char_${index}_role`);
       const likesH = q(`#mkb_char_${index}_likes`);
+      const lookH = q(`#mkb_char_${index}_look`);
       const relationH = q(`#mkb_char_${index}_relation`);
       if (typeH) typeH.value = type;
       if (nameH) nameH.value = name;
-      if (roleH) roleH.value = roleParts.join(', ');
+      if (roleH) roleH.value = (ageEl?.value || '').trim(); // age as plain string
       if (relationH) relationH.value = relation;
+      // interests
+      const interestsEl = block.querySelector('.mkb-char-interests');
+      if (likesH) likesH.value = (interestsEl?.value || '').trim();
+      // description (text appearance)
       const mode = block.querySelector('.mkb-look-mode .mkb-segBtn.selected')?.getAttribute('data-mode') || 'photo';
       const desc = (block.querySelector('.mkb-char-desc')?.value || '').trim();
       if (mode === 'desc' && desc) clearFieldError(block.querySelector('.mkb-char-desc'));
       if (mode === 'photo' && (photoEl?.files?.[0] || q(`#mkb_char_${index}_securefileid`)?.value?.trim()))
         clearFieldError(block.querySelector('.mkb-photo-wrap'));
-      if (likesH) likesH.value = mode === 'desc'
-        ? (desc ? `Aussehen: ${desc}` : '')
-        : (photoEl?.files?.[0] ? `Foto: ${photoEl.files[0].name}` : '');
+      if (lookH) lookH.value = mode === 'desc' ? desc : '';
       const newGroup = unlockGroups();
       if (newGroup) scrollToGroup(newGroup);
       applyCompleteState();
@@ -739,9 +730,11 @@ mainPhotoEl?.addEventListener('change', () => {
       if (!block) return;
       const type = (q(`#mkb_char_${index}_type`)?.value || '').trim();
       const name = (q(`#mkb_char_${index}_name`)?.value || '').trim();
-      const role = (q(`#mkb_char_${index}_role`)?.value || '').trim();
-      const likes = (q(`#mkb_char_${index}_likes`)?.value || '').trim();
+      const age = (q(`#mkb_char_${index}_role`)?.value || '').trim(); // role stores age as plain string
+      const interests = (q(`#mkb_char_${index}_likes`)?.value || '').trim();
+      const description = (q(`#mkb_char_${index}_look`)?.value || '').trim();
       const nameEl = block.querySelector('.mkb-char-name');
+      const interestsEl = block.querySelector('.mkb-char-interests');
       const genderEl = block.querySelector('.mkb-char-gender');
       const ageEl = block.querySelector('.mkb-char-age');
       const typeSeg = block.querySelector('.mkb-char-type-seg');
@@ -750,6 +743,7 @@ mainPhotoEl?.addEventListener('change', () => {
       const photoWrap = block.querySelector('.mkb-photo-wrap');
       const descWrap = block.querySelector('.mkb-desc-wrap');
       if (nameEl) nameEl.value = name;
+      if (interestsEl) interestsEl.value = interests;
       if (typeSeg) {
         typeSeg.querySelectorAll('.mkb-segBtn').forEach(b => {
           b.classList.toggle('selected', b.getAttribute('data-type') === type);
@@ -760,17 +754,13 @@ mainPhotoEl?.addEventListener('change', () => {
       const ageWrapEl = block.querySelector('.mkb-char-age-wrap');
       if (genderWrapEl) genderWrapEl.style.display = isPerson ? '' : 'none';
       if (ageWrapEl) ageWrapEl.style.display = isPerson ? '' : 'none';
-      const gMatch = role.match(/Geschlecht:\s*([^,]+)/);
-      const aMatch = role.match(/Alter:\s*(.+)/);
-      if (genderEl) genderEl.value = (gMatch && gMatch[1].trim()) || '';
-      if (ageEl) ageEl.value = (aMatch && aMatch[1].trim()) || '';
+      if (ageEl) ageEl.value = age;
       const relation = (q(`#mkb_char_${index}_relation`)?.value || '').trim();
       block.querySelectorAll('.mkb-relationChip').forEach(btn => {
         btn.classList.toggle('selected', btn.getAttribute('data-relation') === relation);
       });
-      const m = likes.match(/^Aussehen:\s*(.*)$/i);
-      if (m && m[1] !== undefined) {
-        if (descEl) descEl.value = m[1].trim();
+      if (description) {
+        if (descEl) descEl.value = description;
         lookModeSeg?.querySelectorAll('.mkb-segBtn').forEach(b => b.classList.toggle('selected', b.getAttribute('data-mode') === 'desc'));
         if (photoWrap) photoWrap.style.display = 'none';
         if (descWrap) descWrap.style.display = '';
@@ -790,6 +780,7 @@ mainPhotoEl?.addEventListener('change', () => {
         const block = getCharBlock(i);
         if (block) {
           const nameEl = block.querySelector('.mkb-char-name');
+          const interestsEl = block.querySelector('.mkb-char-interests');
           const genderEl = block.querySelector('.mkb-char-gender');
           const ageEl = block.querySelector('.mkb-char-age');
           const photoEl = block.querySelector('.mkb-char-photo');
@@ -799,6 +790,7 @@ mainPhotoEl?.addEventListener('change', () => {
           const photoWrap = block.querySelector('.mkb-photo-wrap');
           const descWrap = block.querySelector('.mkb-desc-wrap');
           if (nameEl) nameEl.value = '';
+          if (interestsEl) interestsEl.value = '';
           if (genderEl) genderEl.value = '';
           if (ageEl) ageEl.value = '';
           if (photoEl) photoEl.value = '';
@@ -832,6 +824,7 @@ mainPhotoEl?.addEventListener('change', () => {
       const block = getCharBlock(index);
       if (!block) return;
       const nameEl = block.querySelector('.mkb-char-name');
+      const interestsEl = block.querySelector('.mkb-char-interests');
       const genderEl = block.querySelector('.mkb-char-gender');
       const ageEl = block.querySelector('.mkb-char-age');
       const photoEl = block.querySelector('.mkb-char-photo');
@@ -841,6 +834,7 @@ mainPhotoEl?.addEventListener('change', () => {
       const photoWrap = block.querySelector('.mkb-photo-wrap');
       const descWrap = block.querySelector('.mkb-desc-wrap');
       if (nameEl) nameEl.value = '';
+      if (interestsEl) interestsEl.value = '';
       if (genderEl) genderEl.value = '';
       if (ageEl) ageEl.value = '';
       if (photoEl) photoEl.value = '';
@@ -888,6 +882,7 @@ mainPhotoEl?.addEventListener('change', () => {
       });
       const typeSeg = block.querySelector('.mkb-char-type-seg');
       const nameEl = block.querySelector('.mkb-char-name');
+      const interestsEl = block.querySelector('.mkb-char-interests');
       const genderEl = block.querySelector('.mkb-char-gender');
       const ageEl = block.querySelector('.mkb-char-age');
       const photoEl = block.querySelector('.mkb-char-photo');
@@ -913,7 +908,7 @@ mainPhotoEl?.addEventListener('change', () => {
         }
         syncCharBlockToHidden(index);
       });
-      [nameEl, genderEl, ageEl].forEach(el => {
+      [nameEl, interestsEl, genderEl, ageEl].forEach(el => {
         el?.addEventListener('input', () => syncCharBlockToHidden(index));
         el?.addEventListener('change', () => syncCharBlockToHidden(index));
       });
@@ -1091,13 +1086,15 @@ mainPhotoEl?.addEventListener('change', () => {
     function collectProperties() {
       const get = (id) => (q(id)?.value || '').trim();
       const props = {};
-      const age           = get('#mkb_age');
-      const theme         = get('#mkb_theme');
-      const narrative     = get('#mkb_narrative');
-      const values        = get('#mkb_message');
-      const style         = get('#mkb_style');
-      const font          = get('#mkb_font');
-      const preface       = get('#mkb_wishes');
+
+      const age       = get('#mkb_age');
+      const theme     = get('#mkb_theme');
+      const narrative = get('#mkb_narrative');
+      const values    = get('#mkb_message');
+      const style     = get('#mkb_style');
+      const font      = get('#mkb_font');
+      const preface   = get('#mkb_wishes');
+
       if (age)       props['age_group']        = age;
       if (theme)     props['theme']            = theme;
       if (narrative) props['narrative_style']  = narrative;
@@ -1105,6 +1102,23 @@ mainPhotoEl?.addEventListener('change', () => {
       if (style)     props['art_style']        = style;
       if (font)      props['font']             = font;
       if (preface)   props['preface']          = preface;
+
+      // Characters as array with keys: name, interests, description, photo_s3_key
+      const characters = [];
+      for (let i = 1; i <= 5; i++) {
+        const name = get(`#mkb_char_${i}_name`);
+        if (!name) continue;
+        const char = { name };
+        const interests   = get(`#mkb_char_${i}_likes`);
+        const description = get(`#mkb_char_${i}_look`);
+        const photo_s3_key = get(`#mkb_char_${i}_securefileid`);
+        if (interests)    char['interests']    = interests;
+        if (description)  char['description']  = description;
+        if (photo_s3_key) char['photo_s3_key'] = photo_s3_key;
+        characters.push(char);
+      }
+      if (characters.length) props['characters'] = characters;
+
       return props;
     }
 
