@@ -1109,12 +1109,14 @@ mainPhotoEl?.addEventListener('change', () => {
         const name = get(`#mkb_char_${i}_name`);
         if (!name) continue;
         const char = { name };
-        const interests   = get(`#mkb_char_${i}_likes`);
-        const description = get(`#mkb_char_${i}_look`);
-        const photo_s3_key = get(`#mkb_char_${i}_securefileid`);
-        if (interests)    char['interests']    = interests;
-        if (description)  char['description']  = description;
-        if (photo_s3_key) char['photo_s3_key'] = photo_s3_key;
+        const character_type = get(`#mkb_char_${i}_type`);
+        const interests      = get(`#mkb_char_${i}_likes`);
+        const description    = get(`#mkb_char_${i}_look`);
+        const photo_s3_key   = get(`#mkb_char_${i}_securefileid`);
+        if (character_type) char['character_type'] = character_type;
+        if (interests)      char['interests']      = interests;
+        if (description)    char['description']    = description;
+        if (photo_s3_key)   char['photo_s3_key']   = photo_s3_key;
         characters.push(char);
       }
       if (characters.length) props['characters'] = characters;
