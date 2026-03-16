@@ -317,8 +317,45 @@ mainPhotoEl?.addEventListener('change', () => {
       return !!(el && el.value && el.value.trim().length);
     }
   
+    function isCharBlockComplete(index) {
+      if (index === 1) {
+        if (!mainNameEl?.value?.trim()) return false;
+        const type = mainTypeSeg?.querySelector('.mkb-segBtn.selected')?.getAttribute('data-type') || 'Person';
+        if (type === 'Person' && !mainAgeEl?.value?.trim()) return false;
+        const mode = mainLookModeSeg?.querySelector('.mkb-segBtn.selected')?.getAttribute('data-mode') || 'photo';
+        if (mode === 'photo') {
+          if (!mainPhotoEl?.files?.[0] && !q('#mkb_char_1_securefileid')?.value?.trim()) return false;
+        } else {
+          if (!mainDescEl?.value?.trim()) return false;
+        }
+        return true;
+      } else {
+        const block = getCharBlock(index);
+        if (!block) return true;
+        const nameEl = block.querySelector('.mkb-char-name');
+        if (!nameEl?.value?.trim()) return false;
+        const type = block.querySelector('.mkb-char-type-seg .mkb-segBtn.selected')?.getAttribute('data-type') || 'Person';
+        if (type === 'Person') {
+          const ageEl = block.querySelector('.mkb-char-age');
+          if (!ageEl?.value?.trim()) return false;
+        }
+        const mode = block.querySelector('.mkb-look-mode .mkb-segBtn.selected')?.getAttribute('data-mode') || 'photo';
+        if (mode === 'photo') {
+          if (!block.querySelector('.mkb-char-photo')?.files?.[0] && !q(`#mkb_char_${index}_securefileid`)?.value?.trim()) return false;
+        } else {
+          const descEl = block.querySelector('.mkb-char-desc');
+          if (!descEl?.value?.trim()) return false;
+        }
+        return true;
+      }
+    }
+
     function allComplete() {
-      return isChosen('#mkb_age') && isChosen('#mkb_theme') && isChosen('#mkb_narrative') && isChosen('#mkb_message') && charsComplete() && isChosen('#mkb_style') && isChosen('#mkb_font');
+      if (!(isChosen('#mkb_age') && isChosen('#mkb_theme') && isChosen('#mkb_narrative') && isChosen('#mkb_message') && charsComplete() && isChosen('#mkb_style') && isChosen('#mkb_font'))) return false;
+      for (let i = 1; i <= visibleCharBlocks; i++) {
+        if (!isCharBlockComplete(i)) return false;
+      }
+      return true;
     }
   
     const finishWrap = q('#mkbFinishWrap');
@@ -354,7 +391,7 @@ mainPhotoEl?.addEventListener('change', () => {
 
     function refreshSummaryValues() {
       if (!summaryContent || !panelEl?.classList.contains('mkb-panel-summary')) return;
-      const ageLabels = { '0-2': '0–2 Jahre', '3-5': '3–5 Jahre', '6-9': '6–9 Jahre', '10+': '10+ Jahre' };
+      const ageLabels = { 'bis 2': 'bis 2 Jahre', '3-5': '3–5 Jahre', '6-8': '6–8 Jahre', '8+': '8+ Jahre' };
       const valMap = {
         age:       ageLabels[q('#mkb_age')?.value] || q('#mkb_age')?.value || '',
         theme:     q('#mkb_theme')?.value || '',
@@ -408,6 +445,11 @@ mainPhotoEl?.addEventListener('change', () => {
     }
 
     function applyCompleteState() {
+      const mainName = (mainNameEl?.value || '').trim();
+      const narrative = (q('#mkb_narrative')?.value || '').trim();
+      const buchtitelEl = q('#mkb_buchtitel');
+      if (buchtitelEl) buchtitelEl.value = (mainName && narrative) ? mainName + 's ' + narrative : '';
+
       const complete = allComplete();
       if (finishWrap) finishWrap.style.display = '';
       if (finishBtn) finishBtn.classList.toggle('mkb-btn-incomplete', !complete);
@@ -455,7 +497,7 @@ mainPhotoEl?.addEventListener('change', () => {
     }
 
     function buildSummary() {
-      const ageLabels = { '0-2': '0–2 Jahre', '3-5': '3–5 Jahre', '6-9': '6–9 Jahre', '10+': '10+ Jahre' };
+      const ageLabels = { 'bis 2': 'bis 2 Jahre', '3-5': '3–5 Jahre', '6-8': '6–8 Jahre', '8+': '8+ Jahre' };
 
       const charItems = [];
       for (let i = 1; i <= 5; i++) {
@@ -507,6 +549,11 @@ mainPhotoEl?.addEventListener('change', () => {
         setTimeout(() => incompleteGroup.classList.remove('mkb-group-highlight'), 900);
         return;
       }
+      let allCharsValid = true;
+      for (let i = 1; i <= visibleCharBlocks; i++) {
+        if (!highlightEmptyCharFields(i)) allCharsValid = false;
+      }
+      if (!allCharsValid) return;
       buildSummary();
       if (finishWrap) finishWrap.style.display = 'none';
       if (summaryEl) summaryEl.style.display = '';
@@ -723,7 +770,7 @@ mainPhotoEl?.addEventListener('change', () => {
       const relationH = q(`#mkb_char_${index}_relation`);
       if (typeH) typeH.value = type;
       if (nameH) nameH.value = name;
-      if (roleH) roleH.value = block.querySelector('.mkb-roleChip.selected')?.getAttribute('data-role') || '';
+      if (roleH) roleH.value = '';
       if (relationH) relationH.value = relation;
       // interests
       const interestsEl = block.querySelector('.mkb-char-interests');
@@ -767,11 +814,10 @@ mainPhotoEl?.addEventListener('change', () => {
       const isPerson = type === 'Person' || type === '';
       const genderWrapEl = block.querySelector('.mkb-char-gender-wrap');
       const ageWrapEl = block.querySelector('.mkb-char-age-wrap');
+      const relationWrapEl = block.querySelector('.mkb-relation-wrap');
       if (genderWrapEl) genderWrapEl.style.display = isPerson ? '' : 'none';
       if (ageWrapEl) ageWrapEl.style.display = isPerson ? '' : 'none';
-      block.querySelectorAll('.mkb-roleChip').forEach(btn => {
-        btn.classList.toggle('selected', btn.getAttribute('data-role') === role);
-      });
+      if (relationWrapEl) relationWrapEl.style.display = isPerson ? '' : 'none';
       const relation = (q(`#mkb_char_${index}_relation`)?.value || '').trim();
       block.querySelectorAll('.mkb-relationChip').forEach(btn => {
         btn.classList.toggle('selected', btn.getAttribute('data-relation') === relation);
@@ -870,7 +916,6 @@ mainPhotoEl?.addEventListener('change', () => {
       if (descWrap) descWrap.style.display = 'none';
       const statusEl = root.querySelector(`#mkbUploadStatus${index}`);
       if (statusEl) statusEl.textContent = '';
-      block.querySelectorAll('.mkb-roleChip').forEach(btn => btn.classList.remove('selected'));
       block.querySelectorAll('.mkb-relationChip').forEach(btn => btn.classList.remove('selected'));
       block.querySelectorAll('.mkb-field-error').forEach(el => clearFieldError(el));
     }
@@ -898,14 +943,6 @@ mainPhotoEl?.addEventListener('change', () => {
       if (!block) return;
       const removeBtn = block.querySelector('.mkb-removeChar');
       removeBtn?.addEventListener('click', () => removeCharBlock(index));
-      block.querySelector('.mkb-role-chips')?.addEventListener('click', e => {
-        const chip = e.target.closest('.mkb-roleChip');
-        if (!chip) return;
-        const wasSelected = chip.classList.contains('selected');
-        block.querySelectorAll('.mkb-roleChip').forEach(b => b.classList.remove('selected'));
-        if (!wasSelected) chip.classList.add('selected');
-        syncCharBlockToHidden(index);
-      });
       block.querySelector('.mkb-relation-chips')?.addEventListener('click', e => {
         const chip = e.target.closest('.mkb-relationChip');
         if (!chip) return;
@@ -934,11 +971,14 @@ mainPhotoEl?.addEventListener('change', () => {
         const isPerson = type === 'Person';
         const genderWrapEl = block.querySelector('.mkb-char-gender-wrap');
         const ageWrapEl = block.querySelector('.mkb-char-age-wrap');
+        const relationWrapEl = block.querySelector('.mkb-relation-wrap');
         if (genderWrapEl) genderWrapEl.style.display = isPerson ? '' : 'none';
         if (ageWrapEl) ageWrapEl.style.display = isPerson ? '' : 'none';
+        if (relationWrapEl) relationWrapEl.style.display = isPerson ? '' : 'none';
         if (!isPerson) {
           if (genderEl) genderEl.value = '';
           if (ageEl) ageEl.value = '';
+          block.querySelectorAll('.mkb-relationChip').forEach(b => b.classList.remove('selected'));
         }
         // Subtype-Feld
         const subtypeWrap = block.querySelector('.mkb-char-subtype-wrap');
@@ -1077,6 +1117,13 @@ mainPhotoEl?.addEventListener('change', () => {
       if (visibleCharBlocks >= 5) return;
       if (!highlightEmptyCharFields(visibleCharBlocks)) return;
       visibleCharBlocks++;
+      const newBlock = getCharBlock(visibleCharBlocks);
+      const newTypeSeg = newBlock?.querySelector('.mkb-char-type-seg');
+      if (newTypeSeg) {
+        newTypeSeg.querySelectorAll('.mkb-segBtn').forEach(b => b.classList.remove('selected'));
+        const personBtn = newTypeSeg.querySelector('.mkb-segBtn[data-type="Person"]');
+        if (personBtn) personBtn.classList.add('selected');
+      }
       const typeH = q(`#mkb_char_${visibleCharBlocks}_type`);
       if (typeH && !typeH.value.trim()) typeH.value = 'Person';
       updateCharBlocksVisibility();
@@ -1149,6 +1196,7 @@ mainPhotoEl?.addEventListener('change', () => {
       if (style)     props['art_style']        = style;
       if (font)      props['font']             = font;
       if (preface)   props['preface']          = preface;
+
 
       // Characters as array with keys: name, interests, description, photo_s3_key
       const characters = [];

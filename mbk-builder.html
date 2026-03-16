@@ -21,6 +21,7 @@
       <input type="hidden" id="mkb_output" name="properties[_story_settings]" value="" form="product-form-template--27316906033536__main">
 
       <!-- Hidden inputs = Line item properties -->
+      <input class="mkb-hidden" id="mkb_buchtitel" name="properties[_Buchtitel]" value="" form="product-form-template--27316906033536__main">
       <input class="mkb-hidden" id="mkb_age" name="properties[Altersgruppe]" value="">
       <input class="mkb-hidden" id="mkb_theme" name="properties[Thema]" value="" form="product-form-template--27316906033536__main">
       <input class="mkb-hidden" id="mkb_narrative" name="properties[Erzählstil]" value="">
@@ -71,21 +72,21 @@
       <div class="group" data-group="age">
         <div class="group-title">Wähle die Alterskategorie</div>
         <div class="grid">
-          <div class="card" data-target="#mkb_age" data-value="0-2">
+          <div class="card" data-target="#mkb_age" data-value="bis 2">
             <div class="icon">👶</div>
-            <div class="label">0–2 Jahre</div>
+            <div class="label">bis 2 Jahre</div>
           </div>
           <div class="card" data-target="#mkb_age" data-value="3-5">
             <div class="icon">🧒</div>
             <div class="label">3–5 Jahre</div>
           </div>
-          <div class="card" data-target="#mkb_age" data-value="6-9">
+          <div class="card" data-target="#mkb_age" data-value="6-8">
             <div class="icon">👧</div>
-            <div class="label">6–9 Jahre</div>
+            <div class="label">6–8 Jahre</div>
           </div>
-          <div class="card" data-target="#mkb_age" data-value="10+">
+          <div class="card" data-target="#mkb_age" data-value="8+">
             <div class="icon">🎧</div>
-            <div class="label">10+ Jahre</div>
+            <div class="label">8+ Jahre</div>
           </div>
         </div>
       </div>
@@ -275,7 +276,7 @@
         <div id="mkbCharBlocksContainer">
           <div class="mkb-charBlock mkb-charBlock-hidden" data-char-index="2" id="mkbCharBlock2">
             <div class="mkb-charForm">
-              <div class="mkb-charBlock-header"><span class="mkb-segTitle">Charakter 2</span><button type="button"
+              <div class="mkb-charBlock-header"><span class="mkb-segTitle">Nebenfigur 1</span><button type="button"
                   class="mkb-removeChar" data-char-index="2">✕ Entfernen</button></div>
               <div class="mkb-seg mkb-char-type-seg">
                 <button type="button" class="mkb-segBtn selected" data-type="Person">Person</button>
@@ -294,17 +295,7 @@
                 <label class="mkb-label">Interessen <span class="mkb-optional">(optional)</span></label>
                 <input class="field mkb-char-interests" placeholder="z.B. Musik, Sport, Bücher…">
               </div>
-              <div class="mkb-fieldBlock">
-                <label class="mkb-label">Rolle in der Geschichte</label>
-                <div class="mkb-role-chips">
-                  <button type="button" class="mkb-roleChip" data-role="Nebencharakter">Nebencharakter</button>
-                  <button type="button" class="mkb-roleChip" data-role="Antagonist">Antagonist</button>
-                  <button type="button" class="mkb-roleChip" data-role="Begleiter">Begleiter</button>
-                  <button type="button" class="mkb-roleChip" data-role="Mentor">Mentor</button>
-                  <button type="button" class="mkb-roleChip" data-role="Sonstiges">Sonstiges</button>
-                </div>
-              </div>
-              <div class="mkb-fieldBlock">
+              <div class="mkb-fieldBlock mkb-relation-wrap">
                 <label class="mkb-label">Relation zum Hauptcharakter</label>
                 <div class="mkb-relation-chips">
                   <button type="button" class="mkb-relationChip" data-relation="Mutter">Mutter</button>
@@ -313,8 +304,6 @@
                   <button type="button" class="mkb-relationChip" data-relation="Schwester">Schwester</button>
                   <button type="button" class="mkb-relationChip" data-relation="Freund">Freund</button>
                   <button type="button" class="mkb-relationChip" data-relation="Freundin">Freundin</button>
-                  <button type="button" class="mkb-relationChip" data-relation="Haustier">Haustier</button>
-                  <button type="button" class="mkb-relationChip" data-relation="Kuscheltier">Kuscheltier</button>
                   <button type="button" class="mkb-relationChip" data-relation="Sonstiges">Sonstiges</button>
                 </div>
               </div>
@@ -359,7 +348,7 @@
           </div>
           <div class="mkb-charBlock mkb-charBlock-hidden" data-char-index="3" id="mkbCharBlock3">
             <div class="mkb-charForm">
-              <div class="mkb-charBlock-header"><span class="mkb-segTitle">Charakter 3</span><button type="button"
+              <div class="mkb-charBlock-header"><span class="mkb-segTitle">Nebenfigur 2</span><button type="button"
                   class="mkb-removeChar" data-char-index="3">✕ Entfernen</button></div>
               <div class="mkb-seg mkb-char-type-seg">
                 <button type="button" class="mkb-segBtn selected" data-type="Person">Person</button>
@@ -378,17 +367,7 @@
                 <label class="mkb-label">Interessen <span class="mkb-optional">(optional)</span></label>
                 <input class="field mkb-char-interests" placeholder="z.B. Musik, Sport, Bücher…">
               </div>
-              <div class="mkb-fieldBlock">
-                <label class="mkb-label">Rolle in der Geschichte</label>
-                <div class="mkb-role-chips">
-                  <button type="button" class="mkb-roleChip" data-role="Nebencharakter">Nebencharakter</button>
-                  <button type="button" class="mkb-roleChip" data-role="Antagonist">Antagonist</button>
-                  <button type="button" class="mkb-roleChip" data-role="Begleiter">Begleiter</button>
-                  <button type="button" class="mkb-roleChip" data-role="Mentor">Mentor</button>
-                  <button type="button" class="mkb-roleChip" data-role="Sonstiges">Sonstiges</button>
-                </div>
-              </div>
-              <div class="mkb-fieldBlock">
+              <div class="mkb-fieldBlock mkb-relation-wrap">
                 <label class="mkb-label">Relation zum Hauptcharakter</label>
                 <div class="mkb-relation-chips">
                   <button type="button" class="mkb-relationChip" data-relation="Mutter">Mutter</button>
@@ -397,8 +376,6 @@
                   <button type="button" class="mkb-relationChip" data-relation="Schwester">Schwester</button>
                   <button type="button" class="mkb-relationChip" data-relation="Freund">Freund</button>
                   <button type="button" class="mkb-relationChip" data-relation="Freundin">Freundin</button>
-                  <button type="button" class="mkb-relationChip" data-relation="Haustier">Haustier</button>
-                  <button type="button" class="mkb-relationChip" data-relation="Kuscheltier">Kuscheltier</button>
                   <button type="button" class="mkb-relationChip" data-relation="Sonstiges">Sonstiges</button>
                 </div>
               </div>
@@ -443,7 +420,7 @@
           </div>
           <div class="mkb-charBlock mkb-charBlock-hidden" data-char-index="4" id="mkbCharBlock4">
             <div class="mkb-charForm">
-              <div class="mkb-charBlock-header"><span class="mkb-segTitle">Charakter 4</span><button type="button"
+              <div class="mkb-charBlock-header"><span class="mkb-segTitle">Nebenfigur 3</span><button type="button"
                   class="mkb-removeChar" data-char-index="4">✕ Entfernen</button></div>
               <div class="mkb-seg mkb-char-type-seg">
                 <button type="button" class="mkb-segBtn selected" data-type="Person">Person</button>
@@ -462,17 +439,7 @@
                 <label class="mkb-label">Interessen <span class="mkb-optional">(optional)</span></label>
                 <input class="field mkb-char-interests" placeholder="z.B. Musik, Sport, Bücher…">
               </div>
-              <div class="mkb-fieldBlock">
-                <label class="mkb-label">Rolle in der Geschichte</label>
-                <div class="mkb-role-chips">
-                  <button type="button" class="mkb-roleChip" data-role="Nebencharakter">Nebencharakter</button>
-                  <button type="button" class="mkb-roleChip" data-role="Antagonist">Antagonist</button>
-                  <button type="button" class="mkb-roleChip" data-role="Begleiter">Begleiter</button>
-                  <button type="button" class="mkb-roleChip" data-role="Mentor">Mentor</button>
-                  <button type="button" class="mkb-roleChip" data-role="Sonstiges">Sonstiges</button>
-                </div>
-              </div>
-              <div class="mkb-fieldBlock">
+              <div class="mkb-fieldBlock mkb-relation-wrap">
                 <label class="mkb-label">Relation zum Hauptcharakter</label>
                 <div class="mkb-relation-chips">
                   <button type="button" class="mkb-relationChip" data-relation="Mutter">Mutter</button>
@@ -481,8 +448,6 @@
                   <button type="button" class="mkb-relationChip" data-relation="Schwester">Schwester</button>
                   <button type="button" class="mkb-relationChip" data-relation="Freund">Freund</button>
                   <button type="button" class="mkb-relationChip" data-relation="Freundin">Freundin</button>
-                  <button type="button" class="mkb-relationChip" data-relation="Haustier">Haustier</button>
-                  <button type="button" class="mkb-relationChip" data-relation="Kuscheltier">Kuscheltier</button>
                   <button type="button" class="mkb-relationChip" data-relation="Sonstiges">Sonstiges</button>
                 </div>
               </div>
@@ -527,7 +492,7 @@
           </div>
           <div class="mkb-charBlock mkb-charBlock-hidden" data-char-index="5" id="mkbCharBlock5">
             <div class="mkb-charForm">
-              <div class="mkb-charBlock-header"><span class="mkb-segTitle">Charakter 5</span><button type="button"
+              <div class="mkb-charBlock-header"><span class="mkb-segTitle">Nebenfigur 4</span><button type="button"
                   class="mkb-removeChar" data-char-index="5">✕ Entfernen</button></div>
               <div class="mkb-seg mkb-char-type-seg">
                 <button type="button" class="mkb-segBtn selected" data-type="Person">Person</button>
@@ -546,17 +511,7 @@
                 <label class="mkb-label">Interessen <span class="mkb-optional">(optional)</span></label>
                 <input class="field mkb-char-interests" placeholder="z.B. Musik, Sport, Bücher…">
               </div>
-              <div class="mkb-fieldBlock">
-                <label class="mkb-label">Rolle in der Geschichte</label>
-                <div class="mkb-role-chips">
-                  <button type="button" class="mkb-roleChip" data-role="Nebencharakter">Nebencharakter</button>
-                  <button type="button" class="mkb-roleChip" data-role="Antagonist">Antagonist</button>
-                  <button type="button" class="mkb-roleChip" data-role="Begleiter">Begleiter</button>
-                  <button type="button" class="mkb-roleChip" data-role="Mentor">Mentor</button>
-                  <button type="button" class="mkb-roleChip" data-role="Sonstiges">Sonstiges</button>
-                </div>
-              </div>
-              <div class="mkb-fieldBlock">
+              <div class="mkb-fieldBlock mkb-relation-wrap">
                 <label class="mkb-label">Relation zum Hauptcharakter</label>
                 <div class="mkb-relation-chips">
                   <button type="button" class="mkb-relationChip" data-relation="Mutter">Mutter</button>
@@ -565,8 +520,6 @@
                   <button type="button" class="mkb-relationChip" data-relation="Schwester">Schwester</button>
                   <button type="button" class="mkb-relationChip" data-relation="Freund">Freund</button>
                   <button type="button" class="mkb-relationChip" data-relation="Freundin">Freundin</button>
-                  <button type="button" class="mkb-relationChip" data-relation="Haustier">Haustier</button>
-                  <button type="button" class="mkb-relationChip" data-relation="Kuscheltier">Kuscheltier</button>
                   <button type="button" class="mkb-relationChip" data-relation="Sonstiges">Sonstiges</button>
                 </div>
               </div>
