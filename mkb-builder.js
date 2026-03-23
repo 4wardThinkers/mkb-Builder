@@ -19,7 +19,7 @@ console.log('[MKB] loaded');
     //  - `127.0.0.1` / `localhost` works ONLY on *your own* computer.
     //  - Real customers will otherwise try to call THEIR own computer and the upload will fail.
     //  - Therefore provide your real (HTTPS) backend URL via `data-backend-api` on #mkb-builder.
-    const BACKEND_API = root.dataset.backendApi || 'https://nearly-climb-kit-ind.trycloudflare.com/api/v1/store/get-signed-upload-url';
+    const BACKEND_API = root.dataset.backendApi || 'https://api.idasstories.com/v1/store/get-signed-upload-url';
     const MAX_UPLOAD_SIZE = 20 * 1024 * 1024; // 20 MB
   
     async function doSecureUpload(file, hiddenInputEl, statusDivEl, onSuccess) {
