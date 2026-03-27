@@ -24,7 +24,6 @@
       <input class="mkb-hidden" id="mkb_buchtitel" name="properties[_Buchtitel]" value="" form="product-form-template--27316906033536__main">
       <input class="mkb-hidden" id="mkb_age" name="properties[Altersgruppe]" value="">
       <input class="mkb-hidden" id="mkb_theme" name="properties[Thema]" value="" form="product-form-template--27316906033536__main">
-      <input class="mkb-hidden" id="mkb_narrative" name="properties[Erzählstil]" value="">
       <input class="mkb-hidden" id="mkb_message" name="properties[Botschaft/Werte]" value="">
       <input class="mkb-hidden" id="mkb_style" name="properties[Art Style Key]" value="">
       <input class="mkb-hidden" id="mkb_wishes" name="properties[Sonstige Wünsche]" value="">
@@ -125,80 +124,49 @@
         </div>
       </div>
 
-      <!-- Gruppe 3: Erzählstil (nach Thema) -->
-      <div class="group locked" data-group="narrative" data-unlock-when="theme">
-        <div class="group-title">Erzählstil</div>
-        <div class="grid">
-          <div class="card" data-target="#mkb_narrative" data-value="Märchen">
-            <div class="icon">🧚</div>
-            <div class="label">Märchen</div>
-          </div>
-          <div class="card" data-target="#mkb_narrative" data-value="Geschichte">
-            <div class="icon">📖</div>
-            <div class="label">Geschichte</div>
-          </div>
-          <div class="card" data-target="#mkb_narrative" data-value="Abenteuer">
-            <div class="icon">🗺️</div>
-            <div class="label">Abenteuer</div>
-          </div>
-          <div class="card" data-target="#mkb_narrative" data-value="Comic">
-            <div class="icon">💥</div>
-            <div class="label">Comic</div>
-          </div>
-          <div class="card" data-target="#mkb_narrative" data-value="Sachgeschichte">
-            <div class="icon">🔎</div>
-            <div class="label">Sachgeschichte</div>
-          </div>
-          <div class="card" data-target="#mkb_narrative" data-value="Gutenachtgeschichte">
-            <div class="icon">🌙</div>
-            <div class="label">Gutenachtgeschichte</div>
-          </div>
-          <div class="card" data-target="#mkb_narrative" data-value="Fabel">
-            <div class="icon">🦊</div>
-            <div class="label">Fabel</div>
-          </div>
-          <div class="card" data-target="#mkb_narrative" data-value="Reime">
-            <div class="icon">🎵</div>
-            <div class="label">Reime</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Gruppe 4: Botschaft / Werte -->
-      <div class="group locked" data-group="message" data-unlock-when="narrative">
+      <!-- Gruppe 3: Botschaft / Werte -->
+      <div class="group locked" data-group="message" data-unlock-when="theme">
         <div class="group-title">Was soll durch die Geschichte vermittelt werden?</div>
         <div class="grid">
+          <div class="card" data-target="#mkb_message" data-value="Gerechtigkeit">
+            <div class="icon">⚖️</div>
+            <div class="label">Gerechtigkeit</div>
+          </div>
+          <div class="card" data-target="#mkb_message" data-value="Empathie">
+            <div class="icon">💛</div>
+            <div class="label">Empathie</div>
+          </div>
+          <div class="card" data-target="#mkb_message" data-value="Liebe">
+            <div class="icon">❤️</div>
+            <div class="label">Liebe</div>
+          </div>
           <div class="card" data-target="#mkb_message" data-value="Mut">
             <div class="icon">🦁</div>
             <div class="label">Mut</div>
           </div>
-          <div class="card" data-target="#mkb_message" data-value="Freude">
-            <div class="icon">😊</div>
-            <div class="label">Freude</div>
+          <div class="card" data-target="#mkb_message" data-value="Selbstbestimmung">
+            <div class="icon">💪</div>
+            <div class="label">Selbstbestimmung</div>
           </div>
-          <div class="card" data-target="#mkb_message" data-value="Freundschaft">
-            <div class="icon">🤝</div>
-            <div class="label">Freundschaft</div>
+          <div class="card" data-target="#mkb_message" data-value="Ordnung">
+            <div class="icon">📋</div>
+            <div class="label">Ordnung</div>
           </div>
-          <div class="card" data-target="#mkb_message" data-value="Hilfsbereitschaft">
-            <div class="icon">🧡</div>
-            <div class="label">Hilfsbereitschaft</div>
+          <div class="card" data-target="#mkb_message" data-value="Sicherheit">
+            <div class="icon">🛡️</div>
+            <div class="label">Sicherheit</div>
           </div>
-          <div class="card" data-target="#mkb_message" data-value="Selbstvertrauen">
-            <div class="icon">✨</div>
-            <div class="label">Selbstvertrauen</div>
+          <div class="card" data-target="#mkb_message" data-value="Disziplin">
+            <div class="icon">🎯</div>
+            <div class="label">Disziplin</div>
           </div>
-          <div class="card" data-target="#mkb_message" data-value="Geduld">
-            <div class="icon">⏳</div>
-            <div class="label">Geduld</div>
+          <div class="card" data-target="#mkb_message" data-value="Ehrlichkeit">
+            <div class="icon">✅</div>
+            <div class="label">Ehrlichkeit</div>
           </div>
-          <div class="card" data-target="#mkb_message" data-value="Respekt">
-            <div class="icon">🙏</div>
-            <div class="label">Respekt</div>
-          </div>
-          <div class="card" data-target="#mkb_message" data-value="Neugier">
-            <div class="icon">🌟</div>
-            <div class="label">Neugier</div>
+          <div class="card" data-target="#mkb_message" data-value="Offenheit">
+            <div class="icon">🌸</div>
+            <div class="label">Offenheit</div>
           </div>
         </div>
       </div>
@@ -573,22 +541,22 @@
       <!-- Gruppe 4: Art Style (nach Namen der Hauptfigur) -->
       <div class="group locked" data-group="style" data-unlock-when="mainchar-name">
         <div class="group-title">Wähle den Illustrationsstil</div>
-        <div class="grid">
-          <div class="card" data-target="#mkb_style" data-value="watercolor">
-            <div class="icon">🎨</div>
-            <div class="label">Aquarell (soft)</div>
+        <div class="grid mkb-style-grid">
+          <div class="card mkb-style-card" data-target="#mkb_style" data-value="three_d">
+            <img class="mkb-style-preview" src="https://cdn.shopify.com/s/files/1/0967/7704/4352/files/ThreeD.png?v=1774462946" alt="3D-Animation">
+            <div class="label">3D-Animation</div>
           </div>
-          <div class="card" data-target="#mkb_style" data-value="classic_storybook">
-            <div class="icon">📚</div>
-            <div class="label">Klassisch (storybook)</div>
+          <div class="card mkb-style-card" data-target="#mkb_style" data-value="watercolor">
+            <img class="mkb-style-preview" src="https://cdn.shopify.com/s/files/1/0967/7704/4352/files/Aquarell.png?v=1774462947" alt="Aquarell">
+            <div class="label">Aquarell</div>
           </div>
-          <div class="card" data-target="#mkb_style" data-value="comic_bold">
-            <div class="icon">💥</div>
-            <div class="label">Comic (bold)</div>
+          <div class="card mkb-style-card" data-target="#mkb_style" data-value="classic_storybook">
+            <img class="mkb-style-preview" src="https://cdn.shopify.com/s/files/1/0967/7704/4352/files/Storybook.png?v=1774462947" alt="Bilderbuch">
+            <div class="label">Bilderbuch</div>
           </div>
-          <div class="card" data-target="#mkb_style" data-value="three_d">
-            <div class="icon">🧸</div>
-            <div class="label">3D (pixar-like)</div>
+          <div class="card mkb-style-card" data-target="#mkb_style" data-value="comic_bold">
+            <img class="mkb-style-preview" src="https://cdn.shopify.com/s/files/1/0967/7704/4352/files/Comic.png?v=1774462946" alt="Comic">
+            <div class="label">Comic</div>
           </div>
         </div>
       </div>
@@ -637,6 +605,13 @@
 
       <!-- Abschluss-Button -->
       <div class="mkb-finish-wrap" id="mkbFinishWrap" style="display:none;">
+        <div class="mkb-consent-box" id="mkbConsentBox">
+          <label class="mkb-consent-label">
+            <input type="checkbox" id="mkbConsentCheck">
+            <span>Ich bestätige, dass ich als Erziehungsberechtigte/r das Recht habe, Fotos der abgebildeten Kinder für diesen Zweck zu verwenden, und stimme der Verarbeitung dieser Bilder zur Erstellung des personalisierten Kinderbuchs zu.</span>
+          </label>
+          <div class="mkb-consent-error" id="mkbConsentError" style="display:none;">Bitte bestätige dein Einverständnis, bevor du die Bestellung abschließt.</div>
+        </div>
         <button type="button" id="mkbFinishBtn" class="mkb-finish-btn">Bestellung abschließen</button>
       </div>
 

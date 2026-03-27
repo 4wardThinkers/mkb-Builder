@@ -19,16 +19,14 @@ console.log('[MKB] loaded');
     //  - `127.0.0.1` / `localhost` works ONLY on *your own* computer.
     //  - Real customers will otherwise try to call THEIR own computer and the upload will fail.
     //  - Therefore provide your real (HTTPS) backend URL via `data-backend-api` on #mkb-builder.
-    const BACKEND_API = root.dataset.backendApi || 'https://nearly-climb-kit-ind.trycloudflare.com/api/v1/store/get-signed-upload-url';
+    const BACKEND_API = root.dataset.backendApi || 'https://api.idasstories.com/v1/store/get-signed-upload-url';
     const MAX_UPLOAD_SIZE = 20 * 1024 * 1024; // 20 MB
   
-    async function doSecureUpload(file, hiddenInputEl, statusDivEl, onSuccess) {
+    async function doSecureUpload(file, hiddenInputEl, statusDivEl, onSuccess, uploadBoxEl) {
       if (!file) return;
       if (file.size > MAX_UPLOAD_SIZE) {
-        if (statusDivEl) {
-          statusDivEl.textContent = 'Datei zu groß (max. 20 MB).';
-          statusDivEl.style.color = 'red';
-        }
+        clearImagePreview(uploadBoxEl);
+        if (statusDivEl) { statusDivEl.textContent = 'Upload fehlgeschlagen'; statusDivEl.style.color = 'red'; }
         return;
       }
       if (statusDivEl) {
@@ -41,34 +39,24 @@ console.log('[MKB] loaded');
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ filename: file.name, content_type: file.type })
         });
-        if (!response.ok) {
-          const t = await response.text().catch(()=> '');
-          throw new Error('Upload-Autorisierung fehlgeschlagen. ' + (t || ''));
-        }
+        if (!response.ok) throw new Error();
         const { uploadUrl, fields } = await response.json();
-        if (!uploadUrl || !fields) throw new Error('Backend-Antwort unvollständig (uploadUrl/fields fehlen).');
+        if (!uploadUrl || !fields) throw new Error();
         const formData = new FormData();
         Object.entries(fields).forEach(([key, value]) => formData.append(key, value));
         formData.append('file', file);
         const s3Response = await fetch(uploadUrl, { method: 'POST', body: formData });
         if (s3Response.ok) {
           if (hiddenInputEl) hiddenInputEl.value = fields['key'] || '';
-          if (statusDivEl) {
-            statusDivEl.textContent = '✅ Datei sicher hochgeladen!';
-            statusDivEl.style.color = 'green';
-          }
+          if (statusDivEl) { statusDivEl.textContent = '✅ Datei sicher hochgeladen!'; statusDivEl.style.color = 'green'; }
           if (typeof onSuccess === 'function') onSuccess();
         } else {
-          const t = await s3Response.text().catch(()=> '');
-          console.log('S3 Fehler-Response:', t);
-          throw new Error('S3-Upload fehlgeschlagen. ' + (t || ''));
+          throw new Error();
         }
       } catch (err) {
         console.error('Upload-Fehler:', err);
-        if (statusDivEl) {
-          statusDivEl.textContent = '❌ Upload fehlgeschlagen. ' + (err?.message || 'Bitte erneut versuchen.');
-          statusDivEl.style.color = 'red';
-        }
+        clearImagePreview(uploadBoxEl);
+        if (statusDivEl) { statusDivEl.textContent = 'Upload fehlgeschlagen'; statusDivEl.style.color = 'red'; }
       }
     }
   
@@ -76,7 +64,6 @@ console.log('[MKB] loaded');
     const steps = [
       { group: 'age',       input: '#mkb_age' },
       { group: 'theme',     input: '#mkb_theme' },
-      { group: 'narrative', input: '#mkb_narrative' },
       { group: 'message',   input: '#mkb_message' },
       { group: 'chars',     input: null },
       { group: 'style',     input: '#mkb_style' },
@@ -229,6 +216,7 @@ mainLookModeSeg?.addEventListener('click', (e) => {
   if (mainDescWrap) mainDescWrap.style.display = isDesc ? '' : 'none';
   if (isDesc) {
     if (mainPhotoEl) mainPhotoEl.value = '';
+    clearImagePreview(mainPhotoWrap);
     const hid = q('#mkb_char_1_securefileid');
     if (hid) hid.value = '';
     const st = root.querySelector('#mkbUploadStatus1');
@@ -251,6 +239,7 @@ mainDescEl?.addEventListener('change', syncMainFieldsToHidden);
 mainPhotoEl?.addEventListener('change', () => {
   const file = mainPhotoEl.files?.[0];
   if (!file) {
+    clearImagePreview(mainPhotoWrap);
     const hid = q('#mkb_char_1_securefileid');
     if (hid) hid.value = '';
     const likesH = q('#mkb_char_1_likes');
@@ -260,13 +249,39 @@ mainPhotoEl?.addEventListener('change', () => {
     syncMainFieldsToHidden();
     return;
   }
+  showImagePreview(file, mainPhotoWrap);
   clearFieldError(mainPhotoWrap);
-  doSecureUpload(file, q('#mkb_char_1_securefileid'), root.querySelector('#mkbUploadStatus1'), syncMainFieldsToHidden);
+  doSecureUpload(file, q('#mkb_char_1_securefileid'), root.querySelector('#mkbUploadStatus1'), syncMainFieldsToHidden, mainPhotoWrap);
 });
   
     // ===== Helpers =====
     function q(sel){ return root.querySelector(sel); }
     function qa(sel){ return Array.from(root.querySelectorAll(sel)); }
+
+    function showImagePreview(file, uploadBoxEl) {
+      if (!uploadBoxEl || !file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        let img = uploadBoxEl.querySelector('.mkb-upload-preview');
+        if (!img) {
+          img = document.createElement('img');
+          img.className = 'mkb-upload-preview';
+          uploadBoxEl.appendChild(img);
+        }
+        img.src = e.target.result;
+        const inner = uploadBoxEl.querySelector('.mkb-uploadInner');
+        if (inner) inner.style.display = 'none';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function clearImagePreview(uploadBoxEl) {
+      if (!uploadBoxEl) return;
+      const img = uploadBoxEl.querySelector('.mkb-upload-preview');
+      if (img) img.remove();
+      const inner = uploadBoxEl.querySelector('.mkb-uploadInner');
+      if (inner) inner.style.display = '';
+    }
 
     // ---- Thema-Sync & Vorschläge ----
     const themeTextEl = q('#mkbThemeText');
@@ -351,7 +366,7 @@ mainPhotoEl?.addEventListener('change', () => {
     }
 
     function allComplete() {
-      if (!(isChosen('#mkb_age') && isChosen('#mkb_theme') && isChosen('#mkb_narrative') && isChosen('#mkb_message') && charsComplete() && isChosen('#mkb_style') && isChosen('#mkb_font'))) return false;
+      if (!(isChosen('#mkb_age') && isChosen('#mkb_theme') && isChosen('#mkb_message') && charsComplete() && isChosen('#mkb_style') && isChosen('#mkb_font'))) return false;
       for (let i = 1; i <= visibleCharBlocks; i++) {
         if (!isCharBlockComplete(i)) return false;
       }
@@ -365,7 +380,7 @@ mainPhotoEl?.addEventListener('change', () => {
     const editBtn    = q('#mkbEditBtn');
     const panelEl    = q('.panel');
 
-    const GROUP_ORDER = ['age', 'theme', 'narrative', 'message', 'chars', 'style', 'font', 'wishes'];
+    const GROUP_ORDER = ['age', 'theme', 'message', 'chars', 'style', 'font', 'wishes'];
 
     function restoreGroupToPanel(groupEl) {
       if (!panelEl) return;
@@ -395,7 +410,6 @@ mainPhotoEl?.addEventListener('change', () => {
       const valMap = {
         age:       ageLabels[q('#mkb_age')?.value] || q('#mkb_age')?.value || '',
         theme:     q('#mkb_theme')?.value || '',
-        narrative: q('#mkb_narrative')?.value || '',
         message:   q('#mkb_message')?.value || '',
         style:     q('#mkb_style')?.value || '',
         font:      q('#mkb_font')?.value || '',
@@ -432,7 +446,6 @@ mainPhotoEl?.addEventListener('change', () => {
       const checks = [
         { group: 'age',       ok: () => isChosen('#mkb_age') },
         { group: 'theme',     ok: () => isChosen('#mkb_theme') },
-        { group: 'narrative', ok: () => isChosen('#mkb_narrative') },
         { group: 'message',   ok: () => isChosen('#mkb_message') },
         { group: 'chars',     ok: () => charsComplete() },
         { group: 'style',     ok: () => isChosen('#mkb_style') },
@@ -446,9 +459,8 @@ mainPhotoEl?.addEventListener('change', () => {
 
     function applyCompleteState() {
       const mainName = (mainNameEl?.value || '').trim();
-      const narrative = (q('#mkb_narrative')?.value || '').trim();
       const buchtitelEl = q('#mkb_buchtitel');
-      if (buchtitelEl) buchtitelEl.value = (mainName && narrative) ? mainName + 's ' + narrative : '';
+      if (buchtitelEl) buchtitelEl.value = mainName || '';
 
       const complete = allComplete();
       if (finishWrap) finishWrap.style.display = '';
@@ -511,7 +523,6 @@ mainPhotoEl?.addEventListener('change', () => {
       const rows = [
         { key: 'Altersgruppe',      val: ageLabels[q('#mkb_age')?.value] || q('#mkb_age')?.value,  group: 'age' },
         { key: 'Thema',             val: q('#mkb_theme')?.value,                                    group: 'theme' },
-        { key: 'Erzählstil',        val: q('#mkb_narrative')?.value,                               group: 'narrative' },
         { key: 'Botschaft / Werte', val: q('#mkb_message')?.value,                                 group: 'message' },
         { key: 'Figuren',           val: null, charItems,                                           group: 'chars' },
         { key: 'Illustrationsstil', val: q('#mkb_style')?.value,                                   group: 'style' },
@@ -554,6 +565,14 @@ mainPhotoEl?.addEventListener('change', () => {
         if (!highlightEmptyCharFields(i)) allCharsValid = false;
       }
       if (!allCharsValid) return;
+      const consentCheck = q('#mkbConsentCheck');
+      const consentError = q('#mkbConsentError');
+      if (consentCheck && !consentCheck.checked) {
+        if (consentError) consentError.style.display = '';
+        q('#mkbConsentBox')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+      if (consentError) consentError.style.display = 'none';
       buildSummary();
       if (finishWrap) finishWrap.style.display = 'none';
       if (summaryEl) summaryEl.style.display = '';
@@ -583,7 +602,6 @@ mainPhotoEl?.addEventListener('change', () => {
         let unlocked = false;
         if (dep === 'age') unlocked = isChosen('#mkb_age');
         if (dep === 'theme') unlocked = isChosen('#mkb_theme');
-        if (dep === 'narrative') unlocked = isChosen('#mkb_narrative');
         if (dep === 'message') unlocked = isChosen('#mkb_message');
         if (dep === 'chars') unlocked = charsComplete();
         if (dep === 'style') unlocked = isChosen('#mkb_style');
@@ -601,7 +619,7 @@ mainPhotoEl?.addEventListener('change', () => {
   
     // Wenn man oben etwas ändert: downstream leeren + wieder verstecken
     function clearSelectionsAfter(groupName) {
-      const order = ['age','theme','narrative','message','chars','style','font','wishes'];
+      const order = ['age','theme','message','chars','style','font','wishes'];
       const idx = order.indexOf(groupName);
       if (idx === -1) return;
 
@@ -613,10 +631,6 @@ mainPhotoEl?.addEventListener('change', () => {
         qa('[data-group="theme"] .card').forEach(c => c.classList.remove('selected'));
         if (themeTextEl) themeTextEl.value = '';
         themeSuggestGrid?.querySelectorAll('.mkb-suggestChip').forEach(b => b.classList.remove('selected'));
-      }
-      if (toClear.includes('narrative')) {
-        const el = q('#mkb_narrative'); if (el) el.value = '';
-        qa('[data-group="narrative"] .card').forEach(c => c.classList.remove('selected'));
       }
       if (toClear.includes('message')) {
         const el = q('#mkb_message'); if (el) el.value = '';
@@ -1002,6 +1016,7 @@ mainPhotoEl?.addEventListener('change', () => {
       photoEl?.addEventListener('change', () => {
         const file = photoEl.files?.[0];
         if (!file) {
+          clearImagePreview(photoWrap);
           const hid = q(`#mkb_char_${index}_securefileid`);
           if (hid) hid.value = '';
           const likesEl = q(`#mkb_char_${index}_likes`);
@@ -1011,8 +1026,9 @@ mainPhotoEl?.addEventListener('change', () => {
           syncCharBlockToHidden(index);
           return;
         }
+        showImagePreview(file, photoWrap);
         clearFieldError(block.querySelector('.mkb-photo-wrap'));
-        doSecureUpload(file, q(`#mkb_char_${index}_securefileid`), root.querySelector(`#mkbUploadStatus${index}`), () => syncCharBlockToHidden(index));
+        doSecureUpload(file, q(`#mkb_char_${index}_securefileid`), root.querySelector(`#mkbUploadStatus${index}`), () => syncCharBlockToHidden(index), photoWrap);
       });
       lookModeSeg?.addEventListener('click', (e) => {
         const btn = e.target.closest('.mkb-segBtn');
@@ -1025,6 +1041,7 @@ mainPhotoEl?.addEventListener('change', () => {
         if (descWrap) descWrap.style.display = isDesc ? '' : 'none';
         if (isDesc) {
           if (photoEl) photoEl.value = '';
+          clearImagePreview(photoWrap);
           const hid = q(`#mkb_char_${index}_securefileid`);
           if (hid) hid.value = '';
           const statusEl = root.querySelector(`#mkbUploadStatus${index}`);
@@ -1183,7 +1200,6 @@ mainPhotoEl?.addEventListener('change', () => {
 
       const age       = get('#mkb_age');
       const theme     = get('#mkb_theme');
-      const narrative = get('#mkb_narrative');
       const values    = get('#mkb_message');
       const style     = get('#mkb_style');
       const font      = get('#mkb_font');
@@ -1191,7 +1207,6 @@ mainPhotoEl?.addEventListener('change', () => {
 
       if (age)       props['age_group']        = age;
       if (theme)     props['theme']            = theme;
-      if (narrative) props['narrative_style']  = narrative;
       if (values)    props['important_values'] = values;
       if (style)     props['art_style']        = style;
       if (font)      props['font']             = font;

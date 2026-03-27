@@ -1,3 +1,11 @@
+/* ====== Custom Fonts ====== */
+@font-face { font-family: 'DynaPuff-Regular';    src: url('https://cdn.shopify.com/s/files/1/0967/7704/4352/files/DynaPuff-Regular.woff2?v=1774271922')    format('woff2'); font-display: swap; }
+@font-face { font-family: 'Sunshiney-Regular';   src: url('https://cdn.shopify.com/s/files/1/0967/7704/4352/files/Sunshiney-Regular.woff2?v=1774271922')   format('woff2'); font-display: swap; }
+@font-face { font-family: 'GamjaFlower-Regular'; src: url('https://cdn.shopify.com/s/files/1/0967/7704/4352/files/GamjaFlower-Regular.woff2?v=1774271924') format('woff2'); font-display: swap; }
+@font-face { font-family: 'Chewy-Regular';       src: url('https://cdn.shopify.com/s/files/1/0967/7704/4352/files/Chewy-Regular.woff2?v=1774271922')       format('woff2'); font-display: swap; }
+@font-face { font-family: 'ComicRelief-Regular'; src: url('https://cdn.shopify.com/s/files/1/0967/7704/4352/files/ComicRelief-Regular.woff2?v=1774271922') format('woff2'); font-display: swap; }
+@font-face { font-family: 'OleoScript-Regular';  src: url('https://cdn.shopify.com/s/files/1/0967/7704/4352/files/OleoScript-Regular.woff2?v=1774271922')  format('woff2'); font-display: swap; }
+
 /* ====== Eva's Geschichten – Farben aus dem Logo ====== */
 .mkb {
   --mkb-primary: #4A8EA6;           /* Tealblau – satter */
@@ -89,6 +97,15 @@
   .mkb .mkb-uploadBox{ overflow: hidden; }
   .mkb .mkb-uploadIcon{ font-size: 24px; }
   .mkb .mkb-uploadText{ font-weight:700; }
+
+  .mkb .mkb-upload-preview{
+    display: block;
+    width: 100%;
+    max-height: 220px;
+    object-fit: contain;
+    border-radius: 10px;
+    pointer-events: none;
+  }
   
   .mkb .mkb-uploadHint{
     margin-top: 10px;
@@ -192,7 +209,35 @@
       .mkb .card .label { font-weight: 700; white-space: nowrap; text-align: center; color: var(--mkb-text); }
       .mkb .card.selected { border-color: var(--mkb-border-strong); box-shadow: 0 0 0 3px var(--mkb-primary-light); background: var(--mkb-primary-light); color: var(--mkb-text); }
       .mkb .card.selected .label { color: var(--mkb-text); }
-    
+
+      /* Illustrationsstil-Karten mit Bildvorschau */
+      .mkb .mkb-style-grid { grid-template-columns: repeat(2, 1fr); }
+      @media(max-width: 480px){ .mkb .mkb-style-grid { grid-template-columns: 1fr 1fr; } }
+      .mkb .mkb-style-card { aspect-ratio: unset; padding: 0; gap: 0; justify-content: flex-start; }
+      .mkb .mkb-style-preview {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: calc(clamp(12px, 2vw, 18px) - 2px) calc(clamp(12px, 2vw, 18px) - 2px) 0 0;
+        display: block;
+        pointer-events: none;
+      }
+      .mkb .mkb-style-card .label {
+        padding: 8px 10px;
+        font-size: 14px;
+      }
+      .mkb .mkb-style-card.selected .mkb-style-preview {
+        filter: brightness(0.95);
+      }
+
+      /* Font-Karten: Label in der jeweiligen Schriftart */
+      .mkb .card[data-value="DynaPuff-Regular"]    .label { font-family: 'DynaPuff-Regular',    sans-serif; font-size: 22px; }
+      .mkb .card[data-value="Sunshiney-Regular"]   .label { font-family: 'Sunshiney-Regular',   sans-serif; font-size: 22px; }
+      .mkb .card[data-value="GamjaFlower-Regular"] .label { font-family: 'GamjaFlower-Regular', sans-serif; font-size: 22px; }
+      .mkb .card[data-value="Chewy-Regular"]       .label { font-family: 'Chewy-Regular',       sans-serif; font-size: 22px; }
+      .mkb .card[data-value="ComicRelief-Regular"] .label { font-family: 'ComicRelief-Regular', sans-serif; font-size: 22px; }
+      .mkb .card[data-value="OleoScript-Regular"]  .label { font-family: 'OleoScript-Regular',  sans-serif; font-size: 22px; }
+
       .mkb .group.locked { display: none !important; }
     
       .mkb .error {
@@ -282,6 +327,37 @@
       .mkb .mkb-finish-wrap {
         margin-top: 32px;
         text-align: center;
+      }
+      .mkb .mkb-consent-box {
+        background: rgba(74, 142, 166, 0.08);
+        border: 1px solid rgba(74, 142, 166, 0.3);
+        border-radius: 10px;
+        padding: 14px 16px;
+        margin-bottom: 16px;
+        text-align: left;
+      }
+      .mkb .mkb-consent-label {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        cursor: pointer;
+        font-size: 13px;
+        color: var(--mkb-text);
+        line-height: 1.5;
+      }
+      .mkb .mkb-consent-label input[type="checkbox"] {
+        flex-shrink: 0;
+        margin-top: 2px;
+        width: 16px;
+        height: 16px;
+        accent-color: var(--mkb-primary);
+        cursor: pointer;
+      }
+      .mkb .mkb-consent-error {
+        margin-top: 8px;
+        font-size: 12px;
+        color: #c0392b;
+        font-weight: 500;
       }
       .mkb .mkb-finish-btn {
         display: inline-flex; align-items: center; justify-content: center; gap: 8px;
