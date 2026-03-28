@@ -336,6 +336,14 @@
         margin-bottom: 16px;
         text-align: left;
       }
+      .mkb .mkb-char-consent-box {
+        background: rgba(74, 142, 166, 0.08);
+        border: 1px solid rgba(74, 142, 166, 0.3);
+        border-radius: 10px;
+        padding: 14px 16px;
+        margin-top: 12px;
+        text-align: left;
+      }
       .mkb .mkb-consent-label {
         display: flex;
         gap: 10px;

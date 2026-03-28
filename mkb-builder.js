@@ -227,6 +227,16 @@ mainLookModeSeg?.addEventListener('click', (e) => {
     clearFieldError(mainDescEl);
   }
   syncMainFieldsToHidden();
+  const charConsentBox1 = q('#mkbCharConsentBox1');
+  if (charConsentBox1) {
+    charConsentBox1.style.display = isDesc ? 'none' : '';
+    if (isDesc) {
+      const check = charConsentBox1.querySelector('.mkb-char-consent-check');
+      if (check) check.checked = false;
+      const err = charConsentBox1.querySelector('.mkb-consent-error');
+      if (err) err.style.display = 'none';
+    }
+  }
 });
 mainDescEl?.addEventListener('input', syncMainFieldsToHidden);
 mainDescEl?.addEventListener('change', syncMainFieldsToHidden);
@@ -365,11 +375,35 @@ mainPhotoEl?.addEventListener('change', () => {
       }
     }
 
+    function consentComplete() {
+      for (const box of root.querySelectorAll('.mkb-char-consent-box')) {
+        if (box.style.display === 'none') continue;
+        const charBlock = box.closest('.mkb-charBlock');
+        if (charBlock && charBlock.classList.contains('mkb-charBlock-hidden')) continue;
+        const check = box.querySelector('.mkb-char-consent-check');
+        if (check && !check.checked) return false;
+      }
+      return true;
+    }
+
+    function highlightMissingConsent() {
+      root.querySelectorAll('.mkb-char-consent-box').forEach(box => {
+        if (box.style.display === 'none') return;
+        const charBlock = box.closest('.mkb-charBlock');
+        if (charBlock && charBlock.classList.contains('mkb-charBlock-hidden')) return;
+        const err = box.querySelector('.mkb-consent-error');
+        if (!box.querySelector('.mkb-char-consent-check')?.checked) {
+          if (err) err.style.display = '';
+        }
+      });
+    }
+
     function allComplete() {
       if (!(isChosen('#mkb_age') && isChosen('#mkb_theme') && isChosen('#mkb_message') && charsComplete() && isChosen('#mkb_style') && isChosen('#mkb_font'))) return false;
       for (let i = 1; i <= visibleCharBlocks; i++) {
         if (!isCharBlockComplete(i)) return false;
       }
+      if (!consentComplete()) return false;
       return true;
     }
   
@@ -510,6 +544,8 @@ mainPhotoEl?.addEventListener('change', () => {
 
     function buildSummary() {
       const ageLabels = { 'bis 2': 'bis 2 Jahre', '3-5': '3–5 Jahre', '6-8': '6–8 Jahre', '8+': '8+ Jahre' };
+      const styleLabels = { 'three_d': '3D-Animation', 'watercolor': 'Aquarell', 'classic_storybook': 'Bilderbuch', 'comic_bold': 'Comic' };
+      const fontLabels  = { 'DynaPuff-Regular': 'DynaPuff', 'Sunshiney-Regular': 'Sunshiney', 'GamjaFlower-Regular': 'Gamja Flower', 'Chewy-Regular': 'Chewy', 'ComicRelief-Regular': 'Comic Relief', 'OleoScript-Regular': 'Oleo Script' };
 
       const charItems = [];
       for (let i = 1; i <= 5; i++) {
@@ -525,8 +561,8 @@ mainPhotoEl?.addEventListener('change', () => {
         { key: 'Thema',             val: q('#mkb_theme')?.value,                                    group: 'theme' },
         { key: 'Botschaft / Werte', val: q('#mkb_message')?.value,                                 group: 'message' },
         { key: 'Figuren',           val: null, charItems,                                           group: 'chars' },
-        { key: 'Illustrationsstil', val: q('#mkb_style')?.value,                                   group: 'style' },
-        { key: 'Schriftart',        val: q('#mkb_font')?.value,                                    group: 'font' },
+        { key: 'Illustrationsstil', val: styleLabels[q('#mkb_style')?.value] || q('#mkb_style')?.value, group: 'style' },
+        { key: 'Schriftart',        val: fontLabels[q('#mkb_font')?.value]   || q('#mkb_font')?.value,  group: 'font' },
         { key: 'Sonstige Wünsche',  val: q('#mkb_wishes')?.value,                                  group: 'wishes' },
       ];
 
@@ -564,15 +600,9 @@ mainPhotoEl?.addEventListener('change', () => {
       for (let i = 1; i <= visibleCharBlocks; i++) {
         if (!highlightEmptyCharFields(i)) allCharsValid = false;
       }
-      if (!allCharsValid) return;
-      const consentCheck = q('#mkbConsentCheck');
-      const consentError = q('#mkbConsentError');
-      if (consentCheck && !consentCheck.checked) {
-        if (consentError) consentError.style.display = '';
-        q('#mkbConsentBox')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        return;
-      }
-      if (consentError) consentError.style.display = 'none';
+      const finishConsentOk = consentComplete();
+      if (!finishConsentOk) highlightMissingConsent();
+      if (!allCharsValid || !finishConsentOk) return;
       buildSummary();
       if (finishWrap) finishWrap.style.display = 'none';
       if (summaryEl) summaryEl.style.display = '';
@@ -1052,6 +1082,16 @@ mainPhotoEl?.addEventListener('change', () => {
           clearFieldError(descEl);
         }
         syncCharBlockToHidden(index);
+        const charConsentBox = block.querySelector('.mkb-char-consent-box');
+        if (charConsentBox) {
+          charConsentBox.style.display = isDesc ? 'none' : '';
+          if (isDesc) {
+            const check = charConsentBox.querySelector('.mkb-char-consent-check');
+            if (check) check.checked = false;
+            const err = charConsentBox.querySelector('.mkb-consent-error');
+            if (err) err.style.display = 'none';
+          }
+        }
       });
       descEl?.addEventListener('input', () => syncCharBlockToHidden(index));
       descEl?.addEventListener('change', () => syncCharBlockToHidden(index));
@@ -1125,6 +1165,17 @@ mainPhotoEl?.addEventListener('change', () => {
       return valid;
     }
 
+    root.addEventListener('change', (e) => {
+      if (e.target.classList.contains('mkb-char-consent-check')) {
+        const box = e.target.closest('.mkb-char-consent-box');
+        if (box && e.target.checked) {
+          const err = box.querySelector('.mkb-consent-error');
+          if (err) err.style.display = 'none';
+        }
+        applyCompleteState();
+      }
+    });
+
     addBtn?.addEventListener('click', () => {
       const groupEl = addBtn.closest('.group');
       if (groupEl && groupEl.classList.contains('locked')) {
@@ -1132,7 +1183,10 @@ mainPhotoEl?.addEventListener('change', () => {
         return;
       }
       if (visibleCharBlocks >= 5) return;
-      if (!highlightEmptyCharFields(visibleCharBlocks)) return;
+      const charFieldsOk = highlightEmptyCharFields(visibleCharBlocks);
+      const consentOk = consentComplete();
+      if (!consentOk) highlightMissingConsent();
+      if (!charFieldsOk || !consentOk) return;
       visibleCharBlocks++;
       const newBlock = getCharBlock(visibleCharBlocks);
       const newTypeSeg = newBlock?.querySelector('.mkb-char-type-seg');
@@ -1158,6 +1212,15 @@ mainPhotoEl?.addEventListener('change', () => {
         if (groupEl && groupEl.classList.contains('locked')) {
           errorBox?.classList.add('show');
           return;
+        }
+        if (groupEl && groupEl.getAttribute('data-group') === 'style') {
+          let allCharsValid = true;
+          for (let i = 1; i <= visibleCharBlocks; i++) {
+            if (!highlightEmptyCharFields(i)) allCharsValid = false;
+          }
+          const styleConsentOk = consentComplete();
+          if (!styleConsentOk) highlightMissingConsent();
+          if (!allCharsValid || !styleConsentOk) return;
         }
         if (groupEl && groupEl.getAttribute('data-group') === 'message') {
           setSelectedMulti(card, 3);
