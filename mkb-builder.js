@@ -60,15 +60,6 @@ console.log('[MKB] loaded');
       }
     }
   
-    // Reihenfolge / Abhängigkeiten
-    const steps = [
-      { group: 'age',       input: '#mkb_age' },
-      { group: 'theme',     input: '#mkb_theme' },
-      { group: 'message',   input: '#mkb_message' },
-      { group: 'chars',     input: null },
-      { group: 'style',     input: '#mkb_style' },
-    ];
-  
     // ===== Hauptfigur (magisches-kinderbuch) =====
 const charError = root.querySelector('#mkb_char_error');
 
@@ -323,6 +314,22 @@ mainPhotoEl?.addEventListener('change', () => {
     wishesTextEl?.addEventListener('input', syncWishesToHidden);
     wishesTextEl?.addEventListener('change', syncWishesToHidden);
 
+    // ---- Autor & Vorwort Sync ----
+    const authorTextEl  = q('#mkbAuthorText');
+    const forewordTextEl = q('#mkbForewordText');
+    function syncAuthorToHidden() {
+      const hid = q('#mkb_author');
+      if (hid) hid.value = (authorTextEl?.value || '').trim();
+    }
+    authorTextEl?.addEventListener('input', syncAuthorToHidden);
+    authorTextEl?.addEventListener('change', syncAuthorToHidden);
+    function syncForewordToHidden() {
+      const hid = q('#mkb_foreword');
+      if (hid) hid.value = (forewordTextEl?.value || '').trim();
+    }
+    forewordTextEl?.addEventListener('input', syncForewordToHidden);
+    forewordTextEl?.addEventListener('change', syncForewordToHidden);
+
     exploreThemesBtn?.addEventListener('click', () => {
       themeSuggestWrap?.classList.toggle('show');
     });
@@ -414,7 +421,7 @@ mainPhotoEl?.addEventListener('change', () => {
     const editBtn    = q('#mkbEditBtn');
     const panelEl    = q('.panel');
 
-    const GROUP_ORDER = ['age', 'theme', 'message', 'chars', 'style', 'font', 'wishes'];
+    const GROUP_ORDER = ['age', 'theme', 'message', 'chars', 'style', 'font', 'wishes', 'foreword'];
 
     function restoreGroupToPanel(groupEl) {
       if (!panelEl) return;
@@ -448,6 +455,8 @@ mainPhotoEl?.addEventListener('change', () => {
         style:     q('#mkb_style')?.value || '',
         font:      q('#mkb_font')?.value || '',
         wishes:    q('#mkb_wishes')?.value || '',
+        foreword:  q('#mkb_foreword')?.value || '',
+        author:    q('#mkb_author')?.value || '',
       };
       summaryContent.querySelectorAll('.mkb-summary-row:not([data-group="chars"])').forEach(row => {
         const v = valMap[row.dataset.group];
@@ -564,6 +573,8 @@ mainPhotoEl?.addEventListener('change', () => {
         { key: 'Illustrationsstil', val: styleLabels[q('#mkb_style')?.value] || q('#mkb_style')?.value, group: 'style' },
         { key: 'Schriftart',        val: fontLabels[q('#mkb_font')?.value]   || q('#mkb_font')?.value,  group: 'font' },
         { key: 'Sonstige Wünsche',  val: q('#mkb_wishes')?.value,                                  group: 'wishes' },
+        { key: 'Autor',                val: q('#mkb_author')?.value,                                group: 'foreword' },
+        { key: 'Persönliches Vorwort', val: q('#mkb_foreword')?.value,                              group: 'foreword' },
       ];
 
       if (summaryContent) {
@@ -649,7 +660,7 @@ mainPhotoEl?.addEventListener('change', () => {
   
     // Wenn man oben etwas ändert: downstream leeren + wieder verstecken
     function clearSelectionsAfter(groupName) {
-      const order = ['age','theme','message','chars','style','font','wishes'];
+      const order = ['age','theme','message','chars','style','font','wishes','foreword'];
       const idx = order.indexOf(groupName);
       if (idx === -1) return;
 
@@ -677,6 +688,12 @@ mainPhotoEl?.addEventListener('change', () => {
       if (toClear.includes('wishes')) {
         const el = q('#mkb_wishes'); if (el) el.value = '';
         const ta = q('#mkbWishesText'); if (ta) ta.value = '';
+      }
+      if (toClear.includes('foreword')) {
+        const el = q('#mkb_foreword'); if (el) el.value = '';
+        const ta = q('#mkbForewordText'); if (ta) ta.value = '';
+        const au = q('#mkb_author'); if (au) au.value = '';
+        const aut = q('#mkbAuthorText'); if (aut) aut.value = '';
       }
       if (toClear.includes('chars')) {
         for (let i=1;i<=5;i++){
@@ -802,9 +819,6 @@ mainPhotoEl?.addEventListener('change', () => {
       const gender = (genderEl?.value || '').trim();
       const age = (ageEl?.value || '').trim();
       if (age) clearFieldError(ageEl);
-      const roleParts = [];
-      if (gender) roleParts.push(`Geschlecht: ${gender}`);
-      if (age) roleParts.push(`Alter: ${age}`);
       const relation = block.querySelector('.mkb-relationChip.selected')?.getAttribute('data-relation') || '';
       const typeH = q(`#mkb_char_${index}_type`);
       const nameH = q(`#mkb_char_${index}_name`);
@@ -1267,6 +1281,8 @@ mainPhotoEl?.addEventListener('change', () => {
       const style     = get('#mkb_style');
       const font      = get('#mkb_font');
       const preface   = get('#mkb_wishes');
+      const foreword  = get('#mkb_foreword');
+      const author    = get('#mkb_author');
 
       if (age)       props['age_group']        = age;
       if (theme)     props['theme']            = theme;
@@ -1274,6 +1290,8 @@ mainPhotoEl?.addEventListener('change', () => {
       if (style)     props['art_style']        = style;
       if (font)      props['font']             = font;
       if (preface)   props['preface']          = preface;
+      if (foreword)  props['foreword']         = foreword;
+      if (author)    props['author']           = author;
 
 
       // Characters as array with keys: name, interests, description, photo_s3_key
@@ -1287,13 +1305,27 @@ mainPhotoEl?.addEventListener('change', () => {
         const interests      = get(`#mkb_char_${i}_likes`);
         const description    = get(`#mkb_char_${i}_look`);
         const photo_s3_key   = get(`#mkb_char_${i}_securefileid`);
+        const relation       = i > 1 ? get(`#mkb_char_${i}_relation`) : '';
         // subtype from UI (Tier/Objekt only)
         const subtypeEl = i === 1
           ? root.querySelector('#mkbMainSubtype')
           : root.querySelector(`.mkb-charBlock[data-char-index="${i}"] .mkb-char-subtype`);
         const character_subtype = (subtypeEl?.value || '').trim();
+        // gender + age only for Personen
+        const isPerson = (character_type === 'Person' || !character_type);
+        const genderUiEl = i === 1
+          ? mainGenderEl
+          : root.querySelector(`.mkb-charBlock[data-char-index="${i}"] .mkb-char-gender`);
+        const ageUiEl = i === 1
+          ? mainAgeEl
+          : root.querySelector(`.mkb-charBlock[data-char-index="${i}"] .mkb-char-age`);
+        const gender = isPerson ? (genderUiEl?.value || '').trim() : '';
+        const age    = isPerson ? (ageUiEl?.value    || '').trim() : '';
         if (character_type)    char['character_type']    = character_type;
         if (character_subtype) char['character_subtype'] = character_subtype;
+        if (relation)          char['relation']          = relation;
+        if (gender)            char['gender']            = gender;
+        if (age)               char['age']               = age;
         if (interests)         char['interests']         = interests;
         if (description)       char['description']       = description;
         if (photo_s3_key)      char['photo_s3_key']      = photo_s3_key;
@@ -1337,6 +1369,3 @@ mainPhotoEl?.addEventListener('change', () => {
     applyCompleteState();
   
   })();
-  document.addEventListener('DOMContentLoaded', function () {
-  // dein IIFE Inhalt hier rein
-});

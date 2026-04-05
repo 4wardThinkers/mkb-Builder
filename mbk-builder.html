@@ -27,6 +27,8 @@
       <input class="mkb-hidden" id="mkb_message" name="properties[Botschaft/Werte]" value="">
       <input class="mkb-hidden" id="mkb_style" name="properties[Art Style Key]" value="">
       <input class="mkb-hidden" id="mkb_wishes" name="properties[Sonstige Wünsche]" value="">
+      <input class="mkb-hidden" id="mkb_foreword" name="properties[Vorwort]" value="">
+      <input class="mkb-hidden" id="mkb_author" name="properties[Autor]" value="">
 
       <input class="mkb-hidden" id="mkb_char_1_type" name="properties[Charakter 1 - Typ]" value="">
       <input class="mkb-hidden" id="mkb_char_1_name" name="properties[Charakter 1 - Name]" value="">
@@ -277,6 +279,10 @@
                   <button type="button" class="mkb-relationChip" data-relation="Vater">Vater</button>
                   <button type="button" class="mkb-relationChip" data-relation="Bruder">Bruder</button>
                   <button type="button" class="mkb-relationChip" data-relation="Schwester">Schwester</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Oma">Oma</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Opa">Opa</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Tante">Tante</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Onkel">Onkel</button>
                   <button type="button" class="mkb-relationChip" data-relation="Freund">Freund</button>
                   <button type="button" class="mkb-relationChip" data-relation="Freundin">Freundin</button>
                   <button type="button" class="mkb-relationChip" data-relation="Sonstiges">Sonstiges</button>
@@ -356,6 +362,10 @@
                   <button type="button" class="mkb-relationChip" data-relation="Vater">Vater</button>
                   <button type="button" class="mkb-relationChip" data-relation="Bruder">Bruder</button>
                   <button type="button" class="mkb-relationChip" data-relation="Schwester">Schwester</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Oma">Oma</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Opa">Opa</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Tante">Tante</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Onkel">Onkel</button>
                   <button type="button" class="mkb-relationChip" data-relation="Freund">Freund</button>
                   <button type="button" class="mkb-relationChip" data-relation="Freundin">Freundin</button>
                   <button type="button" class="mkb-relationChip" data-relation="Sonstiges">Sonstiges</button>
@@ -435,6 +445,10 @@
                   <button type="button" class="mkb-relationChip" data-relation="Vater">Vater</button>
                   <button type="button" class="mkb-relationChip" data-relation="Bruder">Bruder</button>
                   <button type="button" class="mkb-relationChip" data-relation="Schwester">Schwester</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Oma">Oma</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Opa">Opa</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Tante">Tante</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Onkel">Onkel</button>
                   <button type="button" class="mkb-relationChip" data-relation="Freund">Freund</button>
                   <button type="button" class="mkb-relationChip" data-relation="Freundin">Freundin</button>
                   <button type="button" class="mkb-relationChip" data-relation="Sonstiges">Sonstiges</button>
@@ -514,6 +528,10 @@
                   <button type="button" class="mkb-relationChip" data-relation="Vater">Vater</button>
                   <button type="button" class="mkb-relationChip" data-relation="Bruder">Bruder</button>
                   <button type="button" class="mkb-relationChip" data-relation="Schwester">Schwester</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Oma">Oma</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Opa">Opa</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Tante">Tante</button>
+                  <button type="button" class="mkb-relationChip" data-relation="Onkel">Onkel</button>
                   <button type="button" class="mkb-relationChip" data-relation="Freund">Freund</button>
                   <button type="button" class="mkb-relationChip" data-relation="Freundin">Freundin</button>
                   <button type="button" class="mkb-relationChip" data-relation="Sonstiges">Sonstiges</button>
@@ -632,6 +650,23 @@
             <label class="mkb-label" for="mkbWishesText">Sonstige Wünsche (optional)</label>
             <textarea class="field" id="mkbWishesText" rows="4"
               placeholder="z.B. bestimmte Reime, Spitznamen, besondere Orte, Insider-Witze…"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gruppe: Persönliches Vorwort (optional, nach Sonstigen Wünschen) -->
+      <div class="group locked" data-group="foreword" data-unlock-when="font">
+        <div class="group-title">Möchtest du dein Buch weiter personalisieren?</div>
+        <p class="sub">Füge einen Autor und ein persönliches Vorwort hinzu</p>
+        <div class="mkb-charForm">
+          <div class="mkb-fieldBlock">
+            <label class="mkb-label" for="mkbAuthorText">Autor (optional)</label>
+            <input class="field" id="mkbAuthorText" placeholder="z.B. Mama, Papa, Oma Helga…">
+          </div>
+          <div class="mkb-fieldBlock">
+            <label class="mkb-label" for="mkbForewordText">Vorwort (optional)</label>
+            <textarea class="field" id="mkbForewordText" rows="6"
+              placeholder="z.B. „Für mein kleines Abenteuer-Herz – möge diese Geschichte dich immer begleiten. In Liebe, Mama.""></textarea>
           </div>
         </div>
       </div>
