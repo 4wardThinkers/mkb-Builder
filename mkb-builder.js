@@ -421,7 +421,7 @@ mainPhotoEl?.addEventListener('change', () => {
     const editBtn    = q('#mkbEditBtn');
     const panelEl    = q('.panel');
 
-    const GROUP_ORDER = ['age', 'theme', 'message', 'chars', 'style', 'font', 'wishes', 'foreword'];
+    const GROUP_ORDER = ['age', 'theme', 'message', 'chars', 'style', 'font', 'foreword', 'wishes'];
 
     function restoreGroupToPanel(groupEl) {
       if (!panelEl) return;
