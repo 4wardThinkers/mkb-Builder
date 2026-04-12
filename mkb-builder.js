@@ -572,9 +572,8 @@ mainPhotoEl?.addEventListener('change', () => {
         { key: 'Figuren',           val: null, charItems,                                           group: 'chars' },
         { key: 'Illustrationsstil', val: styleLabels[q('#mkb_style')?.value] || q('#mkb_style')?.value, group: 'style' },
         { key: 'Schriftart',        val: fontLabels[q('#mkb_font')?.value]   || q('#mkb_font')?.value,  group: 'font' },
-        { key: 'Sonstige Wünsche',  val: q('#mkb_wishes')?.value,                                  group: 'wishes' },
-        { key: 'Autor',                val: q('#mkb_author')?.value,                                group: 'foreword' },
-        { key: 'Persönliches Vorwort', val: q('#mkb_foreword')?.value,                              group: 'foreword' },
+        { key: 'Sonstige Wünsche',     val: q('#mkb_wishes')?.value,    group: 'wishes' },
+        { key: 'Persönliches Vorwort', val: q('#mkb_foreword')?.value,  group: 'foreword' },
       ];
 
       if (summaryContent) {
@@ -697,7 +696,7 @@ mainPhotoEl?.addEventListener('change', () => {
       }
       if (toClear.includes('chars')) {
         for (let i=1;i<=5;i++){
-          ['type','name','likes','role','look','securefileid'].forEach(k=>{
+          ['type','name','likes','role','look','securefileid','relation'].forEach(k=>{
             const el = q(`#mkb_char_${i}_${k}`);
             if(el) el.value = '';
           });
@@ -1280,7 +1279,7 @@ mainPhotoEl?.addEventListener('change', () => {
       const values    = get('#mkb_message');
       const style     = get('#mkb_style');
       const font      = get('#mkb_font');
-      const preface   = get('#mkb_wishes');
+      const wishes    = get('#mkb_wishes');
       const foreword  = get('#mkb_foreword');
       const author    = get('#mkb_author');
 
@@ -1289,8 +1288,8 @@ mainPhotoEl?.addEventListener('change', () => {
       if (values)    props['important_values'] = values;
       if (style)     props['art_style']        = style;
       if (font)      props['font']             = font;
-      if (preface)   props['preface']          = preface;
-      if (foreword)  props['foreword']         = foreword;
+      if (wishes)    props['extras']            = wishes;
+      if (foreword)  props['preface']          = foreword;
       if (author)    props['author']           = author;
 
 
